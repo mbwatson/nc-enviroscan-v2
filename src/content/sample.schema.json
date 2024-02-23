@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "sample.schema.json",
+  "title": "Sample",
+  "description": "A sample record in the database",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "The unique identifier for a sample.",
+      "type": "string",
+    },
+    "study": {
+      "description": "",
+      "type": "object",
+      "properties": {
+        "dataset": {
+          "description": "",
+          "type": "string"
+        },
+        "medium": {
+          "description": "",
+          "type": ""
+        },
+        "sample_count": {
+          "description": "",
+          "type": ""
+        },
+        "target_or_nta": {}
+      }
+    },
+    "location": {
+      "description": "",
+      "type": "object",
+      "properties": {
+        "city": {
+          "description": "",
+          "type": ""
+        },
+        "state": {
+          "description": "",
+          "type": ""
+        },
+        "zip_code": {
+          "description": "",
+          "type": ""
+        },
+        "lat": {
+          "description": "",
+          "type": ""
+        },
+        "long": {
+          "description": "",
+          "type": ""
+        },
+      }
+    },
+    "temporal": {
+      "description": "",
+      "type": "object",
+      "properties": {
+        "sample-date": {
+          "description": "",
+          "type": ""
+        },
+        "analysis-date": {
+          "description": "",
+          "type": ""
+        },
+      }
+    },
+    "chemical_identity": {
+      "description": "",
+      "type": "object",
+      "properties": {
+        "chemical_name": {
+          "description": "",
+          "type": ""
+        },
+        "dtxs_id": {
+          "description": "",
+          "type": ""
+        },
+        "chemical_formula": {}
+      }
+    },
+    "nontargeted_chemical_identity": {
+      "description": "",
+      "type": "object",
+      "properties": {
+        "molecular_mass": {
+          "description": "",
+          "type": ""
+        },
+        "retention_time": {
+          "description": "",
+          "type": ""
+        },
+        "id_confidence_level": {}
+      }
+    },
+    "quantitation": {
+      "description": "",
+      "type": "object",
+      "properties": {
+        "abundance": {
+          "description": "",
+          "type": ""
+        },
+        "units": {
+          "description": "",
+          "type": ""
+        },
+        "mrl_or_dl": {}
+      }
+    },
+  }
+}

@@ -1,0 +1,93 @@
+import { useEffect, useRef } from 'react'
+import PropTypes from 'prop-types'
+import { Box } from '@mui/joy'
+import * as d3 from 'd3'
+import data from './data.json'
+
+console.log(data)
+
+export const Dendrogram = ({ width, height }) => {
+  const svgRef = useRef(null)
+  const cx = width * 0.5 // adjust as needed to fit
+  const cy = height * 0.54 // adjust as needed to fit
+  const radius = Math.min(width, height) / 2 - 80
+
+  useEffect(() => {
+    if (!svgRef.current) {
+      return
+    }
+    // create radial cluster layout, (angle, radius)
+    const tree = d3.cluster()
+      .size([2 * Math.PI, radius])
+      .separation((a, b) => (a.parent == b.parent ? 1 : 2) / a.depth)
+    // sort tree & apply the layout
+    const root = tree(d3.hierarchy(data)
+      .sort((a, b) => d3.ascending(a.data.name, b.data.name)))
+    // create SVG container
+    const svg = d3.select(svgRef.current)
+      .attr("width", width)
+      .attr("height", height)
+      .attr("viewBox", [-cx, -cy, width, height])
+      .attr("style", "width: 100%; height: auto; font: 10px sans-serif;");
+
+    // Append links.
+    svg.append("g")
+        .attr("fill", "none")
+        .attr("stroke", "#555")
+        .attr("stroke-opacity", 0.4)
+        .attr("stroke-width", 1.5)
+      .selectAll()
+      .data(root.links())
+      .join("path")
+        .attr("d", d3.linkRadial()
+            .angle(d => d.x)
+            .radius(d => d.y));
+
+    // Append nodes.
+    svg.append("g")
+      .selectAll()
+      .data(root.descendants())
+      .join("circle")
+        .attr("transform", d => `rotate(${d.x * 180 / Math.PI - 90}) translate(${d.y},0)`)
+        .attr("fill", d => d.children ? "#555" : "#999")
+        .attr("r", 2.5);
+
+    // Append labels.
+    svg.append("g")
+        .attr("stroke-linejoin", "round")
+        .attr("stroke-width", 3)
+      .selectAll()
+      .data(root.descendants())
+      .join("text")
+        .attr("transform", d => `rotate(${d.x * 180 / Math.PI - 90}) translate(${d.y},0) rotate(${d.x >= Math.PI ? 180 : 0})`)
+        .attr("dy", "0.31em")
+        .attr("x", d => d.x < Math.PI === !d.children ? 6 : -6)
+        .attr("text-anchor", d => d.x < Math.PI === !d.children ? "start" : "end")
+        .attr("paint-order", "stroke")
+        .attr("stroke", "white")
+        .attr("fill", "currentColor")
+        .text(d => d.data.name);
+
+  }, [svgRef.current])
+
+  return (
+    <Box
+      sx={{
+        border: '2px dashed crimson',
+        position: 'relative',
+      }}
+    >
+      <svg ref={ svgRef } />
+    </Box>
+  )
+}
+
+Dendrogram.propTypes = {
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+}
+
+Dendrogram.defaultProps = {
+  width: 700,
+  height: 700,
+}

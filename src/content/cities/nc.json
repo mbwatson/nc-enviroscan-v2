@@ -1,0 +1,144 @@
+{
+  "cities": {
+    "Charlotte": {
+      "state": "NC",
+      "lat": 35.2271,
+      "long": -80.8431,
+      "county": "Mecklenburg",
+      "zipCode": "28201"
+    },
+    "Raleigh": {
+      "state": "NC",
+      "lat": 35.7796,
+      "long": -78.6382,
+      "county": "Wake",
+      "zipCode": "27601"
+    },
+    "Greensboro": {
+      "state": "NC",
+      "lat": 36.0726,
+      "long": -79.7920,
+      "county": "Guilford",
+      "zipCode": "27401"
+    },
+    "Durham": {
+      "state": "NC",
+      "lat": 35.9940,
+      "long": -78.8986,
+      "county": "Durham",
+      "zipCode": "27701"
+    },
+    "Winston-Salem": {
+      "state": "NC",
+      "lat": 36.0999,
+      "long": -80.2442,
+      "county": "Forsyth",
+      "zipCode": "27101"
+    },
+    "Fayetteville": {
+      "state": "NC",
+      "lat": 35.0527,
+      "long": -78.8784,
+      "county": "Cumberland",
+      "zipCode": "28301"
+    },
+    "Cary": {
+      "state": "NC",
+      "lat": 35.7915,
+      "long": -78.7811,
+      "county": "Wake",
+      "zipCode": "27511"
+    },
+    "Wilmington": {
+      "state": "NC",
+      "lat": 34.2104,
+      "long": -77.8868,
+      "county": "New Hanover",
+      "zipCode": "28401"
+    },
+    "High Point": {
+      "state": "NC",
+      "lat": 35.9557,
+      "long": -80.0053,
+      "county": "Guilford",
+      "zipCode": "27260"
+    },
+    "Greenville": {
+      "state": "NC",
+      "lat": 35.6127,
+      "long": -77.3664,
+      "county": "Pitt",
+      "zipCode": "27834"
+    },
+    "Asheville": {
+      "state": "NC",
+      "lat": 35.5951,
+      "long": -82.5515,
+      "county": "Buncombe",
+      "zipCode": "28801"
+    },
+    "Concord": {
+      "state": "NC",
+      "lat": 35.4094,
+      "long": -80.5795,
+      "county": "Cabarrus",
+      "zipCode": "28025"
+    },
+    "Gastonia": {
+      "state": "NC",
+      "lat": 35.2621,
+      "long": -81.1870,
+      "county": "Gaston",
+      "zipCode": "28052"
+    },
+    "Jacksonville": {
+      "state": "NC",
+      "lat": 34.7541,
+      "long": -77.4302,
+      "county": "Onslow",
+      "zipCode": "28540"
+    },
+    "Chapel Hill": {
+      "state": "NC",
+      "lat": 35.9049,
+      "long": -79.0469,
+      "county": "Orange",
+      "zipCode": "27514"
+    },
+    "Rocky Mount": {
+      "state": "NC",
+      "lat": 35.9382,
+      "long": -77.7905,
+      "county": "Edgecombe/Nash",
+      "zipCode": "27801"
+    },
+    "Huntersville": {
+      "state": "NC",
+      "lat": 35.4107,
+      "long": -80.8429,
+      "county": "Mecklenburg",
+      "zipCode": "28078"
+    },
+    "Burlington": {
+      "state": "NC",
+      "lat": 36.0957,
+      "long": -79.4378,
+      "county": "Alamance",
+      "zipCode": "27215"
+    },
+    "Wilson": {
+      "state": "NC",
+      "lat": 35.7213,
+      "long": -77.9155,
+      "county": "Wilson",
+      "zipCode": "27893"
+    },
+    "Kannapolis": {
+      "state": "NC",
+      "lat": 35.4874,
+      "long": -80.6217,
+      "county": "Cabarrus/Rowan",
+      "zipCode": "28081"
+    }
+  }
+}
