@@ -4,12 +4,11 @@ const { faker } = require('@faker-js/faker')
 const arg = require('arg')
 const { v4: uuidv4 } = require('uuid')
 const { cities: nc } = require('./cities/nc.json')
-const { cities: wa } = require('./cities/wa.json')
-const { chemicals } = require('./pfas-chemicals.json')
+const { chemicals } = require('./chemicals.json')
 
 const testContentPath = path.join('./src', 'content')
-const testContentFile = path.join(testContentPath, 'test-data-v2.json')
-const cities = { ...nc, ...wa }
+const testContentFile = path.join(testContentPath, 'test-data-v0.json')
+const cities = { ...nc }
 
 // defaults
 let SAMPLE_COUNT = 1

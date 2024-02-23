@@ -2,7 +2,7 @@
 #  builder  #
 #############
 
-FROM node:18-alpine3.18 AS builder
+FROM node:20-alpine3.18 AS builder
 
 # create and set working directory
 RUN mkdir /app

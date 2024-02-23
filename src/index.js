@@ -4,7 +4,6 @@ import { HashRouter } from 'react-router-dom'
 import { CssVarsProvider } from '@mui/joy/styles'
 import {
   AppContextProvider,
-  AuthProvider,
   DataProvider,
   MapProvider,
 } from '@context'
@@ -22,15 +21,13 @@ const ProvisionedApp = () => (
   <QueryClientProvider client={ queryClient }>
     <CssVarsProvider theme={ theme } defaultMode="light">
       <HashRouter>
-        <AuthProvider>
-          <DataProvider>
-            <AppContextProvider>
-              <MapProvider>
-                <App />
-              </MapProvider>
-            </AppContextProvider>
-          </DataProvider>
-        </AuthProvider>
+        <DataProvider>
+          <AppContextProvider>
+            <MapProvider>
+              <App />
+            </MapProvider>
+          </AppContextProvider>
+        </DataProvider>
       </HashRouter>
     </CssVarsProvider>
   </QueryClientProvider>

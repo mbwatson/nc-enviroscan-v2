@@ -6,14 +6,12 @@ import {
   clusterLayer,
   unclusteredPointLayer,
   countiesFillLayer,
-  congressionalFillLayer,
 } from './layers'
 
 const interactiveLayerIds = [
   clusterLayer.id,
   unclusteredPointLayer.id,
   countiesFillLayer.id,
-  congressionalFillLayer.id,
 ]
 
 export const Mapper = ({ height, width, ...props }) => {

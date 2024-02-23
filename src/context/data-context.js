@@ -1,6 +1,6 @@
 import { createContext, useContext, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
-import sampleData from '@content/test-data-v2.json'
+import sampleData from '@content/test-data-v0.json'
 
 const DataContext = createContext({ })
 

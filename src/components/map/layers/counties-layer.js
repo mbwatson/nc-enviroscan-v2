@@ -1,5 +1,5 @@
 import { Layer, Source } from 'react-map-gl'
-import counties from '@content/us-counties.geojson'
+import counties from '@content/nc-counties.geojson'
 
 export const countiesFillLayer = {
   id: 'counties-fill',

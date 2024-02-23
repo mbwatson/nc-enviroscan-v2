@@ -1,5 +1,5 @@
 const fs = require('fs')
-const data = require('./test-data-v2.json')
+const data = require('./test-data-v0.json')
 
 test('data records have expected top-level properties', () => {
 	const expectedKeys = [

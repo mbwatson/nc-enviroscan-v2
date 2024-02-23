@@ -39,12 +39,6 @@ export const LayerSelect = () => {
           County Boundaries
         </MenuItem>
 
-        <MenuItem onClick={ handleSelect('congressional') }>
-          <ListItemDecorator>
-            <BoundaryIcon color={ layers.active.includes('congressional') ? 'primary' : 'default' } />
-          </ListItemDecorator>
-          Congressional District Boundaries
-        </MenuItem>
       </Menu>
     </Dropdown>
   )
