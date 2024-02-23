@@ -10,7 +10,7 @@ import {
 import theme from './theme'
 import './index.css'
 import '@fontsource/inter'
-import { QueryClient, QueryClientProvider } from 'react-query'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 const queryClient = new QueryClient()
 
