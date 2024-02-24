@@ -10,7 +10,7 @@ import {
 //   (2) main menu links
 export const routes = [
   {
-    path: '/map',
+    path: '/',
     label: 'Map',
     icon: <MapIcon />,
     requiresAuth: true,
