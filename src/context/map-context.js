@@ -15,7 +15,7 @@ const RALEIGH_NC = { label: 'Raleigh, NC', longitude: -78.644257, latitude: 35.7
 export const MapProvider = ({ children }) => {
   const mapRef = useRef(null)
   const [viewState, setViewState] = useLocalStorage('view-state', RALEIGH_NC)
-  const [mapStyle, setMapStyle] = useState('min')
+  const [mapStyle, setMapStyle] = useLocalStorage('map-style', 'min')
 
   //
   const layers = {
@@ -60,6 +60,7 @@ export const MapProvider = ({ children }) => {
     const options = {
       'min': colorMode === 'dark' ? 'dark-v11' : 'light-v11',
       'nav': colorMode === 'dark' ? 'navigation-night-v1' : 'navigation-day-v1',
+      'outdoors': 'outdoors-v9',
       'sat': 'satellite-v9',
     }
     return options[mapStyle]
