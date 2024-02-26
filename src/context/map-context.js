@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { useLocalStorage } from '@hooks'
 import ncCityData from '@content/cities/nc.json'
 import {
-  ClusterLayer,
   CountiesLayer,
   HospitalsLayer,
   PublicSchoolsLayer,
@@ -22,13 +21,12 @@ export const MapProvider = ({ children }) => {
 
   //
   const layers = {
-    'samples-cluster': ClusterLayer,
     'counties': CountiesLayer,
     'hospitals': HospitalsLayer,
     'public-schools': PublicSchoolsLayer,
     'non-public-schools': NonPublicSchoolsLayer,
   }
-  const [activeLayerIds, setActiveLayerIds] = useState(new Set(['samples-cluster']))
+  const [activeLayerIds, setActiveLayerIds] = useState(new Set())
   const showLayer = layerId => {
     const newIds = new Set([...activeLayerIds])
     newIds.add(layerId)

@@ -3,14 +3,10 @@ import PropTypes from 'prop-types'
 import Map from 'react-map-gl'
 import { useAppContext, useMap } from '@context'
 import {
-  clusterLayer,
-  unclusteredPointLayer,
   countiesFillLayer,
 } from './layers'
 
 const interactiveLayerIds = [
-  clusterLayer.id,
-  unclusteredPointLayer.id,
   countiesFillLayer.id,
 ]
 
@@ -48,40 +44,6 @@ export const Mapper = ({ height, width, ...props }) => {
     if (!feature) {
       popup.close()
       return
-    }
-    // console.log(feature)
-
-    // so we have a feature layer.
-    // we may want different behavior whether
-    // the user clicks a cluster or a single point.
-
-    // if we have a cluster...
-    if (feature.layer.id === clusterLayer.id) {
-      // with the source data...
-      const clusterSource = mapRef.current.getSource('samples')
-      // ...and the id of the clicked-on cluster,
-      const { cluster_id } = feature.properties
-      // we'll identify the samples that comprise it.
-      clusterSource.getClusterLeaves(cluster_id, 100, 0, function(error, aFeatures){
-        const samples = aFeatures.map(f => f.properties.id)
-        popup.set({
-          lat: feature.geometry.coordinates[1],
-          long: feature.geometry.coordinates[0],
-          title: `${ aFeatures.length } SAMPLES`,
-          data: samples,
-        })
-      })
-      return
-    }
-
-    // we have a single point.
-    if (feature.layer.id === unclusteredPointLayer.id) {
-      popup.set({
-        lat: feature.geometry.coordinates[1],
-        long: feature.geometry.coordinates[0],
-        title: 'SAMPLE',
-        data: feature.properties.id,
-      })
     }
   }
 

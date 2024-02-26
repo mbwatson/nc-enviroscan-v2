@@ -23,15 +23,6 @@ export const LayerSelect = () => {
         startDecorator={ <LayersIcon /> }
       >Layers</MenuButton>
       <Menu placement="top-start" offset={ 10 }>
-        <MenuItem onClick={ handleSelect('samples-cluster') }>
-          <ListItemDecorator>
-            <DatasetLayerIcon color={ layers.active.includes('samples-cluster') ? 'primary' : 'default' } />
-          </ListItemDecorator>
-          Clustered Sample Data
-        </MenuItem>
-
-        <ListDivider />
-
         <MenuItem onClick={ handleSelect('hospitals') }>
           <ListItemDecorator>
             <DatasetLayerIcon color={ layers.active.includes('hospitals') ? 'primary' : 'default' } />

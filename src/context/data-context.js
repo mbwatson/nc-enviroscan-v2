@@ -1,26 +1,25 @@
 import { createContext, useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
-import testData from '@content/test-data-v0.json'
 import { useQuery } from '@tanstack/react-query'
-
-const USE_TEST_DATA = process.env.USE_TEST_DATA === 'true'
 
 const DataContext = createContext({ })
 
 export const useData = () => useContext(DataContext)
 
-const getCount = async url => {
-  const { data } = await axios.get(url)
-  if (!data) {
-    return 0
-  }
-  return data.count
-}
+const apiRoot = `https://enviroscan-drf.renci.org/drf/api/`
 
-const fetchFeatures = async url => {
+const fetchFeatures = async endpoint => {
+  const getCount = async () => {
+    const { data } = await axios.get(`${ apiRoot }${ endpoint }?page=1`)
+    if (!data) {
+      return 0
+    }
+    return data.count
+  }
+
   // first, let's see how many pages there are.
-  const count = await getCount(`${ url }?page=1`)
+  const count = await getCount()
   // bail out and send back empty features array if none.
   if (['NaN', 0].includes(Number(count))) {
     return { type: 'FeatureCollection', features: [] }
@@ -28,7 +27,7 @@ const fetchFeatures = async url => {
   // we have a non-zero number of pages,
   // so we make the neccssary number of requests.
   const promises = [...Array(Math.ceil(count / 10)).keys()]
-    .map(p => axios(`${ url }?page=${ p + 1 }`))
+    .map(p => axios(`${ apiRoot }${ endpoint }?page=${ p + 1 }`))
   // return all features stitched together.
   return Promise.all(promises)
     .then(responses => responses.map(r => r.data.results))
@@ -40,20 +39,27 @@ const fetchFeatures = async url => {
 
 }
 
-const fetchSuperfundSites = () => fetchFeatures(`https://enviroscan-drf.renci.org/drf/api/nc_superfund_sites/`)
-const fetchHospitals = () => fetchFeatures(`https://enviroscan-drf.renci.org/drf/api/nc_superfund_sites/`)
-const fetchPublicSchools = () => fetchFeatures(`https://enviroscan-drf.renci.org/drf/api/public_schools_4326/`)
-const fetchNonPublicSchools = () => fetchFeatures(`https://enviroscan-drf.renci.org/drf/api/non_public_schools_4326/`)
-
 export const DataProvider = ({ children }) => {
-  const [sampleData, ] = useState(testData)
-  const hospitalsQuery = useQuery({ queryKey: ['hospitals'], queryFn: fetchHospitals })
-  const publicSchoolsQuery = useQuery({ queryKey: ['public-schools'], queryFn: fetchPublicSchools })
-  const nonPublicSchoolsQuery = useQuery({ queryKey: ['non-public-schools'], queryFn: fetchNonPublicSchools })
+  const superfundSitesQuery = useQuery({
+    queryKey: ['nc_superfund_sites'],
+    queryFn: () => fetchFeatures('nc_superfund_sites'),
+  })
+  const hospitalsQuery = useQuery({
+    queryKey: ['hospitals'],
+    queryFn: () => fetchFeatures('hospitals_4326'),
+  })
+  const publicSchoolsQuery = useQuery({
+    queryKey: ['public_schools'],
+    queryFn: () => fetchFeatures('public_schools_4326'),
+  })
+  const nonPublicSchoolsQuery = useQuery({
+    queryKey: ['non_public_schools'],
+    queryFn: () => fetchFeatures('non_public_schools_4326'),
+  })
 
   return (
     <DataContext.Provider value={{
-      data: sampleData,
+      superfundSites: superfundSitesQuery.data,
       hospitals: hospitalsQuery.data,
       publicSchools: publicSchoolsQuery.data,
       nonPublicSchools: nonPublicSchoolsQuery.data,
