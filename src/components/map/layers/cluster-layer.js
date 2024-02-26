@@ -1,6 +1,6 @@
 import { Fragment, useEffect } from 'react'
 import { Layer, Popup, Source } from 'react-map-gl'
-import { useAppContext, useMap } from '@context'
+import { useData, useMap } from '@context'
 
 export const clusterLayer = {
   id: 'clusters',
@@ -51,12 +51,12 @@ export const unclusteredPointLayer = {
 }
 
 export const ClusterLayer = () => {
-  const { data } = useAppContext()
+  const { data } = useData()
   const { mapRef, popup } = useMap()
 
   const geojson = {
     type: 'FeatureCollection',
-    features: data.data.map(sample => ({
+    features: data.map(sample => ({
       type: 'Feature',
       geometry: {
         type: 'Point',

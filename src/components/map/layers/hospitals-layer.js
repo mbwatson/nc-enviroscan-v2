@@ -1,6 +1,6 @@
 import { Fragment, useMemo } from 'react'
 import { Source, Layer } from 'react-map-gl'
-import { useAppContext, useMap } from '@context'
+import { useData, useMap } from '@context'
 
 export const pointLayer = {
   id: 'hospital-point',
@@ -16,12 +16,12 @@ export const pointLayer = {
 }
 
 export const HospitalsLayer = () => {
-  const { data } = useAppContext()
+  const { hospitals } = useData()
 
 	return (
     <Source
       type="geojson"
-      data={ data.hospitals }
+      data={ hospitals }
     >
       <Layer { ...pointLayer } />
     </Source>
