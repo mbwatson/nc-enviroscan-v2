@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import testData from '@content/test-data-v0.json'
 import { useQuery } from '@tanstack/react-query'
 
-const USE_TEST_DATA = true
+const USE_TEST_DATA = process.env.USE_TEST_DATA === 'true'
 
 const DataContext = createContext({ })
 
