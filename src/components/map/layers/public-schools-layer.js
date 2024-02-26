@@ -1,29 +1,18 @@
-import { Fragment, useMemo } from 'react'
-import { Source, Layer } from 'react-map-gl'
-import { useData, useMap } from '@context'
+import { useData } from '@context'
+import { PointLayer } from './'
 
-export const pointLayer = {
-  id: 'public-school-point',
-  type: 'circle',
-  source: 'public-schools',
-  filter: ['!', ['has', 'point_count']],
-  paint: {
-    'circle-color': '#209adc',
-    'circle-radius': 4,
-    'circle-stroke-width': 2,
-    'circle-stroke-color': '#007abc'
-  }
-}
 
 export const PublicSchoolsLayer = () => {
   const { publicSchools } = useData()
 
-	return (
-    <Source
-      type="geojson"
+  return (
+    <PointLayer
+      source="public-schools"
       data={ publicSchools }
-    >
-      <Layer { ...pointLayer } />
-    </Source>
+      paint={{
+        'circle-color': '#007abc',
+        'circle-stroke-color': '#003a8c',
+      }}
+    />
   )
 }

@@ -7,6 +7,7 @@ import {
   HospitalsLayer,
   PublicSchoolsLayer,
   NonPublicSchoolsLayer,
+  SuperfundSitesLayer,
 } from '@components/map'
 
 const MapContext = createContext({ })
@@ -19,12 +20,13 @@ export const MapProvider = ({ children }) => {
   const [viewState, setViewState] = useLocalStorage('view-state', RALEIGH_NC)
   const [mapStyle, setMapStyle] = useLocalStorage('map-style', 'min')
 
-  //
+  // there's redundancy to address here and in data-context's layerData
   const layers = {
     'counties': CountiesLayer,
     'hospitals': HospitalsLayer,
-    'public-schools': PublicSchoolsLayer,
     'non-public-schools': NonPublicSchoolsLayer,
+    'public-schools': PublicSchoolsLayer,
+    'superfund-sites': SuperfundSitesLayer,
   }
   const [activeLayerIds, setActiveLayerIds] = useState(new Set())
   const showLayer = layerId => {

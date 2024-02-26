@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext } from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
 import { useQuery } from '@tanstack/react-query'
@@ -36,12 +36,11 @@ const fetchFeatures = async endpoint => {
         return geojson
       }, { type: 'FeatureCollection', features: [] }))
     .catch(console.error)
-
 }
 
 export const DataProvider = ({ children }) => {
   const superfundSitesQuery = useQuery({
-    queryKey: ['nc_superfund_sites'],
+    queryKey: ['superfund-sites'],
     queryFn: () => fetchFeatures('nc_superfund_sites'),
   })
   const hospitalsQuery = useQuery({
@@ -49,16 +48,40 @@ export const DataProvider = ({ children }) => {
     queryFn: () => fetchFeatures('hospitals_4326'),
   })
   const publicSchoolsQuery = useQuery({
-    queryKey: ['public_schools'],
+    queryKey: ['public-schools'],
     queryFn: () => fetchFeatures('public_schools_4326'),
   })
   const nonPublicSchoolsQuery = useQuery({
-    queryKey: ['non_public_schools'],
+    queryKey: ['non-public-schools'],
     queryFn: () => fetchFeatures('non_public_schools_4326'),
   })
 
+  const layerData = {
+    'superfund-sites': {
+      id: 'superfund-sites',
+      name: 'NC Superfund Sites',
+      query: superfundSitesQuery,
+    },
+    'hospitals': {
+      id: 'hospitals',
+      name: 'Hospitals',
+      query: hospitalsQuery,
+    },
+    'public-schools': {
+      id: 'public-schools',
+      name: 'Public Schools',
+      query: publicSchoolsQuery,
+    },
+    'non-public-schools': {
+      id: 'non-public-schools',
+      name: 'Non-public Schools',
+      query: nonPublicSchoolsQuery,
+    },
+  }
+
   return (
     <DataContext.Provider value={{
+      layerData,
       superfundSites: superfundSitesQuery.data,
       hospitals: hospitalsQuery.data,
       publicSchools: publicSchoolsQuery.data,

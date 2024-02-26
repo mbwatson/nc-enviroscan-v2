@@ -1,15 +1,17 @@
 import {
-  Dropdown, ListDivider, ListItemDecorator, Menu, MenuButton, MenuItem,
+  CircularProgress, Dropdown, ListDivider, ListItemDecorator,
+  Menu, MenuButton, MenuItem,
 } from '@mui/joy'
 import {
-  Biotech as DatasetLayerIcon,
+  Place as DataLayerIcon,
   Gesture as BoundaryIcon,
   Layers as LayersIcon,
 } from '@mui/icons-material'
-import { useMap } from '@context'
+import { useData, useMap } from '@context'
 
 export const LayerSelect = () => {
   const { layers } = useMap()
+  const { layerData } = useData()
 
   const handleSelect = layerId => () => {
     layers.toggle(layerId)
@@ -23,30 +25,20 @@ export const LayerSelect = () => {
         startDecorator={ <LayersIcon /> }
       >Layers</MenuButton>
       <Menu placement="top-start" offset={ 10 }>
-        <MenuItem onClick={ handleSelect('hospitals') }>
-          <ListItemDecorator>
-            <DatasetLayerIcon color={ layers.active.includes('hospitals') ? 'primary' : 'default' } />
-          </ListItemDecorator>
-          Hospitals
-        </MenuItem>
-
-        <ListDivider />
-
-        <MenuItem onClick={ handleSelect('public-schools') }>
-          <ListItemDecorator>
-            <DatasetLayerIcon color={ layers.active.includes('public-schools') ? 'primary' : 'default' } />
-          </ListItemDecorator>
-          Public Schools
-        </MenuItem>
-
-        <ListDivider />
-
-        <MenuItem onClick={ handleSelect('non-public-schools') }>
-          <ListItemDecorator>
-            <DatasetLayerIcon color={ layers.active.includes('non-public-schools') ? 'primary' : 'default' } />
-          </ListItemDecorator>
-          Non-public Schools
-        </MenuItem>
+        {
+          Object.keys(layerData).map(key => (
+            <MenuItem key={ key } onClick={ handleSelect(key) }>
+              <ListItemDecorator>
+                {
+                  layerData[key].query.isPending
+                  ? <CircularProgress variant="soft" size="sm" />
+                  : <DataLayerIcon color={ layers.active.includes(key) ? 'primary' : 'default' } />
+                }
+              </ListItemDecorator>
+              { layerData[key].name }
+            </MenuItem>
+          ))
+        }
 
         <ListDivider />
 
