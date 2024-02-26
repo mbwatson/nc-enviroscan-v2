@@ -5,6 +5,9 @@ import ncCityData from '@content/cities/nc.json'
 import {
   ClusterLayer,
   CountiesLayer,
+  HospitalsLayer,
+  PublicSchoolsLayer,
+  NonPublicSchoolsLayer,
 } from '@components/map'
 
 const MapContext = createContext({ })
@@ -21,6 +24,9 @@ export const MapProvider = ({ children }) => {
   const layers = {
     'samples-cluster': ClusterLayer,
     'counties': CountiesLayer,
+    'hospitals': HospitalsLayer,
+    'public-schools': PublicSchoolsLayer,
+    'non-public-schools': NonPublicSchoolsLayer,
   }
   const [activeLayerIds, setActiveLayerIds] = useState(new Set(['samples-cluster']))
   const showLayer = layerId => {

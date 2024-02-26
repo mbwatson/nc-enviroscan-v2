@@ -27,7 +27,34 @@ export const LayerSelect = () => {
           <ListItemDecorator>
             <DatasetLayerIcon color={ layers.active.includes('samples-cluster') ? 'primary' : 'default' } />
           </ListItemDecorator>
-          Clustered Samples
+          Clustered Sample Data
+        </MenuItem>
+
+        <ListDivider />
+
+        <MenuItem onClick={ handleSelect('hospitals') }>
+          <ListItemDecorator>
+            <DatasetLayerIcon color={ layers.active.includes('hospitals') ? 'primary' : 'default' } />
+          </ListItemDecorator>
+          Hospitals
+        </MenuItem>
+
+        <ListDivider />
+
+        <MenuItem onClick={ handleSelect('public-schools') }>
+          <ListItemDecorator>
+            <DatasetLayerIcon color={ layers.active.includes('public-schools') ? 'primary' : 'default' } />
+          </ListItemDecorator>
+          Public Schools
+        </MenuItem>
+
+        <ListDivider />
+
+        <MenuItem onClick={ handleSelect('non-public-schools') }>
+          <ListItemDecorator>
+            <DatasetLayerIcon color={ layers.active.includes('non-public-schools') ? 'primary' : 'default' } />
+          </ListItemDecorator>
+          Non-public Schools
         </MenuItem>
 
         <ListDivider />
