@@ -3,7 +3,7 @@ import { Sheet } from '@mui/joy'
 import { useAppContext } from '@context'
 import { Header } from '@components/layout'
 import { routes as menuItems, Router } from './router'
-
+import { Preferences } from '@components/preferences'
 import { ColorModeToggle, PreferencesDrawer } from '@components/preferences'
 
 //
@@ -15,6 +15,7 @@ export const App = () => {
     let actions = []
     actions = [
       <ColorModeToggle key="color-mode-action-button" />,
+      <Preferences key="preferences" />,
       ...actions,
     ]
     return actions
