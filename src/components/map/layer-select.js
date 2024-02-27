@@ -29,18 +29,20 @@ export const LayerSelect = () => {
         <ListSubheader>Locations</ListSubheader>
 
         {
-          Object.keys(layerData).map(key => (
-            <MenuItem key={ key } onClick={ handleSelect(key) } disabled={ layerData[key].isPending }>
-              <ListItemDecorator>
-                {
-                  layerData[key].isPending
-                  ? <CircularProgress variant="soft" size="sm" />
-                  : <DataLayerIcon color={ layers.active.includes(key) ? 'primary' : 'default' } />
-                }
-              </ListItemDecorator>
-              { layers.available[key].name }
-            </MenuItem>
-          ))
+          Object.keys(layerData)
+            .sort()
+            .map(key => (
+              <MenuItem key={ key } onClick={ handleSelect(key) } disabled={ layerData[key].isPending }>
+                <ListItemDecorator>
+                  {
+                    layerData[key].isPending
+                    ? <CircularProgress variant="soft" size="sm" />
+                    : <DataLayerIcon color={ layers.active.includes(key) ? 'primary' : 'default' } />
+                  }
+                </ListItemDecorator>
+                { layers.available[key].name }
+              </MenuItem>
+            ))
         }
 
         <ListDivider />
