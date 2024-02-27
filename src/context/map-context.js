@@ -20,7 +20,9 @@ export const MapProvider = ({ children }) => {
   const [viewState, setViewState] = useLocalStorage('view-state', RALEIGH_NC)
   const [mapStyle, setMapStyle] = useLocalStorage('map-style', 'min')
 
-  // there's redundancy to address here and in data-context's layerData
+  // this is a weird implementation.
+  // the properties of this object need to match
+  // those of `layerData` in the data context.
   const layers = {
     'counties': {
       name: 'Counties',
@@ -98,7 +100,6 @@ export const MapProvider = ({ children }) => {
       duration: 2000,
     })
   }, [mapRef.current])
-
 
   return (
     <MapContext.Provider value={{
