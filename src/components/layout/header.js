@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types'
 import { LinearProgress, Stack, Sheet } from '@mui/joy'
 import { useAppContext } from '@context'
-import { Menu } from '@components/layout/nav-menu'
+// import { Menu } from '@components/layout/nav-menu'
+import logo from '@images/logo.png'
 
 //
 
-export const Header = ({ menuLinks, actions }) => {
+export const Header = ({ /*menuLinks,*/ actions }) => {
   const { loading, preferences } = useAppContext()
 
   return (
@@ -33,7 +34,7 @@ export const Header = ({ menuLinks, actions }) => {
         justifyContent="space-between"
         sx={{ p: 1, height: '4rem' }}
       >
-        <Menu options={ menuLinks } />
+        <img src={ logo } height="48" />
         <Stack
           flexDirection="row"
           justifyContent="flex-end"
@@ -48,6 +49,6 @@ export const Header = ({ menuLinks, actions }) => {
 }
 
 Header.propTypes = {
-  menuLinks: Menu.propTypes.options,
+  // menuLinks: Menu.propTypes.options,
   actions: PropTypes.arrayOf(PropTypes.node),
 }
