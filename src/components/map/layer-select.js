@@ -1,5 +1,6 @@
 import {
-  CircularProgress, Dropdown, ListDivider, ListItemDecorator,
+  CircularProgress, Dropdown,
+  ListDivider, ListItemDecorator, ListSubheader,
   Menu, MenuButton, MenuItem,
 } from '@mui/joy'
 import {
@@ -25,6 +26,8 @@ export const LayerSelect = () => {
         startDecorator={ <LayersIcon /> }
       >Layers</MenuButton>
       <Menu placement="top-start" offset={ 10 }>
+        <ListSubheader>Locations</ListSubheader>
+
         {
           Object.keys(layerData).map(key => (
             <MenuItem key={ key } onClick={ handleSelect(key) } disabled={ layerData[key].isPending }>
@@ -41,6 +44,15 @@ export const LayerSelect = () => {
         }
 
         <ListDivider />
+
+        <ListSubheader>Boundaries</ListSubheader>
+
+        <MenuItem onClick={ handleSelect('census-tracts') }>
+          <ListItemDecorator>
+            <BoundaryIcon color={ layers.active.includes('census-tracts') ? 'primary' : 'default' } />
+          </ListItemDecorator>
+          Census Tract Boundaries
+        </MenuItem>
 
         <MenuItem onClick={ handleSelect('counties') }>
           <ListItemDecorator>

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { useLocalStorage } from '@hooks'
 import ncCityData from '@content/nc-cities.json'
 import {
+  CensusTractsLayer,
   CountiesLayer,
   HospitalsLayer,
   PublicSchoolsLayer,
@@ -21,11 +22,8 @@ export const MapProvider = ({ children }) => {
   const [mapStyle, setMapStyle] = useLocalStorage('map-style', 'min')
 
   const layers = {
-    'counties': {
-      id: 'counties',
-      name: 'Counties',
-      Component: CountiesLayer,
-    },
+    [CensusTractsLayer.id]: { ...CensusTractsLayer },
+    [CountiesLayer.id]: { ...CountiesLayer },
     [HospitalsLayer.id]: { ...HospitalsLayer },
     [NonPublicSchoolsLayer.id]: { ...NonPublicSchoolsLayer },
     [PublicSchoolsLayer.id]: { ...PublicSchoolsLayer },

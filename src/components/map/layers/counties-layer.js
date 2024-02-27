@@ -17,12 +17,16 @@ const countiesLineLayer = {
   source: 'counties',
   type: 'line',
   paint: {
-    'line-width': 1,
+    'line-width': 2,
     'line-color': '#0080ef',
   }
 }
 
-export const CountiesLayer = () => {
+export const id = 'counties'
+
+export const name = 'Counties'
+
+export const Component = () => {
   return (
     <Source
       id="counties"
@@ -34,3 +38,4 @@ export const CountiesLayer = () => {
     </Source>
   )
 }
+

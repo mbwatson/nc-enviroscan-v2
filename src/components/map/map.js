@@ -2,11 +2,12 @@ import { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Map, { Popup } from 'react-map-gl'
 import { useAppContext, useMap } from '@context'
-import {
-  countiesFillLayer,
-} from './layers'
+
+import { censusTractsFillLayer } from './layers/census-tracts-layer'
+import { countiesFillLayer } from './layers/counties-layer'
 
 const interactiveLayerIds = [
+  censusTractsFillLayer.id,
   countiesFillLayer.id,
 ]
 
