@@ -27,7 +27,7 @@ export const LayerSelect = () => {
       <Menu placement="top-start" offset={ 10 }>
         {
           Object.keys(layerData).map(key => (
-            <MenuItem key={ key } onClick={ handleSelect(key) }>
+            <MenuItem key={ key } onClick={ handleSelect(key) } disabled={ layerData[key].isPending }>
               <ListItemDecorator>
                 {
                   layerData[key].isPending
