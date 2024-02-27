@@ -1,10 +1,13 @@
 import { createContext, useCallback, useContext, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import { useLocalStorage } from '@hooks'
-import ncCityData from '@content/cities/nc.json'
+import ncCityData from '@content/nc-cities.json'
 import {
-  ClusterLayer,
   CountiesLayer,
+  HospitalsLayer,
+  PublicSchoolsLayer,
+  NonPublicSchoolsLayer,
+  SuperfundSitesLayer,
 } from '@components/map'
 
 const MapContext = createContext({ })
@@ -17,12 +20,30 @@ export const MapProvider = ({ children }) => {
   const [viewState, setViewState] = useLocalStorage('view-state', RALEIGH_NC)
   const [mapStyle, setMapStyle] = useLocalStorage('map-style', 'min')
 
-  //
+  // there's redundancy to address here and in data-context's layerData
   const layers = {
-    'samples-cluster': ClusterLayer,
-    'counties': CountiesLayer,
+    'counties': {
+      name: 'Counties',
+      Component: CountiesLayer,
+    },
+    'hospitals': {
+      name: 'Hospitals',
+      Component: HospitalsLayer,
+    },
+    'non-public-schools': {
+      name: 'Non-public Schools',
+      Component: NonPublicSchoolsLayer,
+    },
+    'public-schools': {
+      name: 'Public Schools',
+      Component: PublicSchoolsLayer,
+    },
+    'superfund-sites': {
+      name: 'Superfund Sites',
+      Component: SuperfundSitesLayer,
+    },
   }
-  const [activeLayerIds, setActiveLayerIds] = useState(new Set(['samples-cluster']))
+  const [activeLayerIds, setActiveLayerIds] = useState(new Set())
   const showLayer = layerId => {
     const newIds = new Set([...activeLayerIds])
     newIds.add(layerId)

@@ -1,40 +1,75 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext } from 'react'
 import PropTypes from 'prop-types'
-import testData from '@content/test-data-v0.json'
+import axios from 'axios'
 import { useQuery } from '@tanstack/react-query'
-
-const USE_TEST_DATA = process.env.USE_TEST_DATA === 'true'
 
 const DataContext = createContext({ })
 
 export const useData = () => useContext(DataContext)
 
+const apiRoot = `https://enviroscan-drf.renci.org/drf/api/`
+
+const createQuerier = endpoint => async () => {
+  const getCount = async () => {
+    const { data } = await axios.get(`${ apiRoot }${ endpoint }?page=1`)
+    if (!data) {
+      return 0
+    }
+    return data.count
+  }
+
+  // first, let's see how many pages there are.
+  const count = await getCount()
+  // bail out and send back empty features array if none.
+  if (['NaN', 0].includes(Number(count))) {
+    return { type: 'FeatureCollection', features: [] }
+  }
+  // we have a non-zero number of pages,
+  // so we make the neccssary number of requests.
+  const promises = [...Array(Math.ceil(count / 10)).keys()]
+    .map(p => axios(`${ apiRoot }${ endpoint }?page=${ p + 1 }`))
+  // return all features stitched together.
+  return Promise.all(promises)
+    .then(responses => responses.map(r => r.data.results))
+    .then(data => data.reduce((geojson, d) => {
+        geojson.features = geojson.features.concat(d.features)
+        return geojson
+      }, { type: 'FeatureCollection', features: [] }))
+    .catch(console.error)
+}
+
 export const DataProvider = ({ children }) => {
-  const [sampleData, ] = useState(testData)
-  const { /*isPending, error,*/ data: esData } = useQuery({
-    queryKey: ['nc_superfund_sites'],
-    queryFn: () =>
-      Promise.all([
-        fetch('http://enviroscan-drf.renci.org/drf/api/nc_superfund_sites/?page=1'),
-        fetch('http://enviroscan-drf.renci.org/drf/api/nc_superfund_sites/?page=2'),
-        fetch('http://enviroscan-drf.renci.org/drf/api/nc_superfund_sites/?page=3'),
-        fetch('http://enviroscan-drf.renci.org/drf/api/nc_superfund_sites/?page=4'),
-        fetch('http://enviroscan-drf.renci.org/drf/api/nc_superfund_sites/?page=5'),
-      ])
-        .then(responses => {
-          const combined = [...responses.map(res => res.data)]
-          console.log(combined)
-          return combined
-        })
-        .catch(console.error)
-        .finally(() => []),
+  const superfundSitesQuery = useQuery({
+    queryKey: ['superfund-sites'],
+    queryFn: createQuerier('nc_superfund_sites'),
+  })
+  const hospitalsQuery = useQuery({
+    queryKey: ['hospitals'],
+    queryFn: createQuerier('hospitals_4326'),
+  })
+  const publicSchoolsQuery = useQuery({
+    queryKey: ['public-schools'],
+    queryFn: createQuerier('public_schools_4326'),
+  })
+  const nonPublicSchoolsQuery = useQuery({
+    queryKey: ['non-public-schools'],
+    queryFn: createQuerier('non_public_schools_4326'),
   })
 
-  console.log(esData)
+  const layerData = {
+    'superfund-sites': superfundSitesQuery,
+    'hospitals': hospitalsQuery,
+    'public-schools': publicSchoolsQuery,
+    'non-public-schools': nonPublicSchoolsQuery,
+  }
 
   return (
     <DataContext.Provider value={{
-      data: USE_TEST_DATA ? sampleData : esData,
+      layerData,
+      superfundSites: superfundSitesQuery.data,
+      hospitals: hospitalsQuery.data,
+      publicSchools: publicSchoolsQuery.data,
+      nonPublicSchools: nonPublicSchoolsQuery.data,
     }}>
       { children }
     </DataContext.Provider>

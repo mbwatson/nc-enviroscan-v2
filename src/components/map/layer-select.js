@@ -1,15 +1,17 @@
 import {
-  Dropdown, ListDivider, ListItemDecorator, Menu, MenuButton, MenuItem,
+  CircularProgress, Dropdown, ListDivider, ListItemDecorator,
+  Menu, MenuButton, MenuItem,
 } from '@mui/joy'
 import {
-  Biotech as DatasetLayerIcon,
+  Place as DataLayerIcon,
   Gesture as BoundaryIcon,
   Layers as LayersIcon,
 } from '@mui/icons-material'
-import { useMap } from '@context'
+import { useData, useMap } from '@context'
 
 export const LayerSelect = () => {
   const { layers } = useMap()
+  const { layerData } = useData()
 
   const handleSelect = layerId => () => {
     layers.toggle(layerId)
@@ -23,12 +25,20 @@ export const LayerSelect = () => {
         startDecorator={ <LayersIcon /> }
       >Layers</MenuButton>
       <Menu placement="top-start" offset={ 10 }>
-        <MenuItem onClick={ handleSelect('samples-cluster') }>
-          <ListItemDecorator>
-            <DatasetLayerIcon color={ layers.active.includes('samples-cluster') ? 'primary' : 'default' } />
-          </ListItemDecorator>
-          Clustered Samples
-        </MenuItem>
+        {
+          Object.keys(layerData).map(key => (
+            <MenuItem key={ key } onClick={ handleSelect(key) }>
+              <ListItemDecorator>
+                {
+                  layerData[key].isPending
+                  ? <CircularProgress variant="soft" size="sm" />
+                  : <DataLayerIcon color={ layers.active.includes(key) ? 'primary' : 'default' } />
+                }
+              </ListItemDecorator>
+              { layers.available[key].name }
+            </MenuItem>
+          ))
+        }
 
         <ListDivider />
 
