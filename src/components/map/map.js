@@ -66,7 +66,7 @@ export const Mapper = ({ height, width, ...props }) => {
     >
       {
         layers.active.map(layerId => {
-          const Component = layers.available[layerId]
+          const { Component } = layers.available[layerId]
           return <Component key={ layerId } />
         })
       }

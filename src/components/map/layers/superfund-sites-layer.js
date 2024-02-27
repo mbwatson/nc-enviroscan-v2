@@ -11,6 +11,7 @@ export const SuperfundSitesLayer = () => {
       paint={{
         'circle-color': '#8530eb',
         'circle-stroke-color': '#330099',
+        'circle-radius': 6,
       }}
     />
   )

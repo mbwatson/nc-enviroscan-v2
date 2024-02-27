@@ -8,7 +8,7 @@ export const PointLayer = ({ data = [], source, paint }) => {
     type: 'circle',
     filter: ['!', ['has', 'point_count']],
     paint: {
-      'circle-radius': 4,
+      'circle-radius': 2,
       'circle-stroke-width': 1,
       ...paint,
     }

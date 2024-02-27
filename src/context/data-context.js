@@ -9,7 +9,7 @@ export const useData = () => useContext(DataContext)
 
 const apiRoot = `https://enviroscan-drf.renci.org/drf/api/`
 
-const fetchFeatures = async endpoint => {
+const createQuerier = endpoint => async () => {
   const getCount = async () => {
     const { data } = await axios.get(`${ apiRoot }${ endpoint }?page=1`)
     if (!data) {
@@ -41,42 +41,26 @@ const fetchFeatures = async endpoint => {
 export const DataProvider = ({ children }) => {
   const superfundSitesQuery = useQuery({
     queryKey: ['superfund-sites'],
-    queryFn: () => fetchFeatures('nc_superfund_sites'),
+    queryFn: createQuerier('nc_superfund_sites'),
   })
   const hospitalsQuery = useQuery({
     queryKey: ['hospitals'],
-    queryFn: () => fetchFeatures('hospitals_4326'),
+    queryFn: createQuerier('hospitals_4326'),
   })
   const publicSchoolsQuery = useQuery({
     queryKey: ['public-schools'],
-    queryFn: () => fetchFeatures('public_schools_4326'),
+    queryFn: createQuerier('public_schools_4326'),
   })
   const nonPublicSchoolsQuery = useQuery({
     queryKey: ['non-public-schools'],
-    queryFn: () => fetchFeatures('non_public_schools_4326'),
+    queryFn: createQuerier('non_public_schools_4326'),
   })
 
   const layerData = {
-    'superfund-sites': {
-      id: 'superfund-sites',
-      name: 'NC Superfund Sites',
-      query: superfundSitesQuery,
-    },
-    'hospitals': {
-      id: 'hospitals',
-      name: 'Hospitals',
-      query: hospitalsQuery,
-    },
-    'public-schools': {
-      id: 'public-schools',
-      name: 'Public Schools',
-      query: publicSchoolsQuery,
-    },
-    'non-public-schools': {
-      id: 'non-public-schools',
-      name: 'Non-public Schools',
-      query: nonPublicSchoolsQuery,
-    },
+    'superfund-sites': superfundSitesQuery,
+    'hospitals': hospitalsQuery,
+    'public-schools': publicSchoolsQuery,
+    'non-public-schools': nonPublicSchoolsQuery,
   }
 
   return (

@@ -30,12 +30,12 @@ export const LayerSelect = () => {
             <MenuItem key={ key } onClick={ handleSelect(key) }>
               <ListItemDecorator>
                 {
-                  layerData[key].query.isPending
+                  layerData[key].isPending
                   ? <CircularProgress variant="soft" size="sm" />
                   : <DataLayerIcon color={ layers.active.includes(key) ? 'primary' : 'default' } />
                 }
               </ListItemDecorator>
-              { layerData[key].name }
+              { layers.available[key].name }
             </MenuItem>
           ))
         }

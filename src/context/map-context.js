@@ -1,7 +1,7 @@
 import { createContext, useCallback, useContext, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import { useLocalStorage } from '@hooks'
-import ncCityData from '@content/cities/nc.json'
+import ncCityData from '@content/nc-cities.json'
 import {
   CountiesLayer,
   HospitalsLayer,
@@ -22,11 +22,26 @@ export const MapProvider = ({ children }) => {
 
   // there's redundancy to address here and in data-context's layerData
   const layers = {
-    'counties': CountiesLayer,
-    'hospitals': HospitalsLayer,
-    'non-public-schools': NonPublicSchoolsLayer,
-    'public-schools': PublicSchoolsLayer,
-    'superfund-sites': SuperfundSitesLayer,
+    'counties': {
+      name: 'Counties',
+      Component: CountiesLayer,
+    },
+    'hospitals': {
+      name: 'Hospitals',
+      Component: HospitalsLayer,
+    },
+    'non-public-schools': {
+      name: 'Non-public Schools',
+      Component: NonPublicSchoolsLayer,
+    },
+    'public-schools': {
+      name: 'Public Schools',
+      Component: PublicSchoolsLayer,
+    },
+    'superfund-sites': {
+      name: 'Superfund Sites',
+      Component: SuperfundSitesLayer,
+    },
   }
   const [activeLayerIds, setActiveLayerIds] = useState(new Set())
   const showLayer = layerId => {
