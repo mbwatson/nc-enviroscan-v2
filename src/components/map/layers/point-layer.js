@@ -2,6 +2,8 @@ import PropTypes from 'prop-types'
 import { Layer, Source } from 'react-map-gl'
 
 export const PointLayer = ({ data = [], source, paint }) => {
+  // Layer Properties
+  // https://docs.mapbox.com/style-spec/reference/layers/
   const layerProperties = {
     id: `${ source }-point`,
     source: source,
@@ -29,4 +31,5 @@ PointLayer.propTypes = {
   paint: PropTypes.object,
   data: PropTypes.object.isRequired,
   source: PropTypes.string.isRequired,
+  marker: PropTypes.node,
 }

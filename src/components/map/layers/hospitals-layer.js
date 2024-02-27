@@ -2,7 +2,11 @@ import { useData } from '@context'
 import { PointLayer } from './'
 
 
-export const HospitalsLayer = () => {
+export const id = `hospitals`
+
+export const name = 'Hospitals'
+
+export const Component = () => {
   const { hospitals } = useData()
 
 	return (

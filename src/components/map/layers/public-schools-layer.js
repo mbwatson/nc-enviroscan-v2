@@ -2,12 +2,16 @@ import { useData } from '@context'
 import { PointLayer } from './'
 
 
-export const PublicSchoolsLayer = () => {
+export const id = `public-schools`
+
+export const name = 'Public Schools'
+
+export const Component = () => {
   const { publicSchools } = useData()
 
   return (
     <PointLayer
-      source="public-schools"
+      source={ id }
       data={ publicSchools }
       paint={{
         'circle-color': '#007abc',

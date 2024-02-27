@@ -2,12 +2,16 @@ import { useData } from '@context'
 import { PointLayer } from './'
 
 
-export const NonPublicSchoolsLayer = () => {
+export const id = `non-public-schools`
+
+export const name = 'Non-public Schools'
+
+export const Component = () => {
   const { nonPublicSchools } = useData()
 
   return (
     <PointLayer
-      source="non-public-schools"
+      source={ id }
       data={ nonPublicSchools || {} }
       paint={{
         'circle-color': '#bc7a00',
@@ -16,3 +20,4 @@ export const NonPublicSchoolsLayer = () => {
     />
   )
 }
+

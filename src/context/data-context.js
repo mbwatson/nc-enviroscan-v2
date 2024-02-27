@@ -3,12 +3,22 @@ import PropTypes from 'prop-types'
 import axios from 'axios'
 import { useQuery } from '@tanstack/react-query'
 
+import {
+  HospitalsLayer,
+  PublicSchoolsLayer,
+  NonPublicSchoolsLayer,
+  SuperfundSitesLayer,
+} from '@components/map'
+
 const DataContext = createContext({ })
 
 export const useData = () => useContext(DataContext)
 
 const apiRoot = `https://enviroscan-drf.renci.org/drf/api/`
 
+// pagination isn't available, so use this `create` wrapper,
+// which handles spreading the data-fetching
+// across multiple requests and gluing it together.
 const createQuerier = endpoint => async () => {
   const getCount = async () => {
     const { data } = await axios.get(`${ apiRoot }${ endpoint }?page=1`)
@@ -40,27 +50,27 @@ const createQuerier = endpoint => async () => {
 
 export const DataProvider = ({ children }) => {
   const superfundSitesQuery = useQuery({
-    queryKey: ['superfund-sites'],
+    queryKey: ['nc_superfund_sites'],
     queryFn: createQuerier('nc_superfund_sites'),
   })
   const hospitalsQuery = useQuery({
-    queryKey: ['hospitals'],
+    queryKey: ['hospitals_4326'],
     queryFn: createQuerier('hospitals_4326'),
   })
   const publicSchoolsQuery = useQuery({
-    queryKey: ['public-schools'],
+    queryKey: ['public_schools_4326'],
     queryFn: createQuerier('public_schools_4326'),
   })
   const nonPublicSchoolsQuery = useQuery({
-    queryKey: ['non-public-schools'],
+    queryKey: ['non_public_schools_4326'],
     queryFn: createQuerier('non_public_schools_4326'),
   })
 
   const layerData = {
-    'superfund-sites': superfundSitesQuery,
-    'hospitals': hospitalsQuery,
-    'public-schools': publicSchoolsQuery,
-    'non-public-schools': nonPublicSchoolsQuery,
+    [SuperfundSitesLayer.id]: superfundSitesQuery,
+    [HospitalsLayer.id]: hospitalsQuery,
+    [PublicSchoolsLayer.id]: publicSchoolsQuery,
+    [NonPublicSchoolsLayer.id]: nonPublicSchoolsQuery,
   }
 
   return (

@@ -20,30 +20,16 @@ export const MapProvider = ({ children }) => {
   const [viewState, setViewState] = useLocalStorage('view-state', RALEIGH_NC)
   const [mapStyle, setMapStyle] = useLocalStorage('map-style', 'min')
 
-  // this is a weird implementation.
-  // the properties of this object need to match
-  // those of `layerData` in the data context.
   const layers = {
     'counties': {
+      id: 'counties',
       name: 'Counties',
       Component: CountiesLayer,
     },
-    'hospitals': {
-      name: 'Hospitals',
-      Component: HospitalsLayer,
-    },
-    'non-public-schools': {
-      name: 'Non-public Schools',
-      Component: NonPublicSchoolsLayer,
-    },
-    'public-schools': {
-      name: 'Public Schools',
-      Component: PublicSchoolsLayer,
-    },
-    'superfund-sites': {
-      name: 'Superfund Sites',
-      Component: SuperfundSitesLayer,
-    },
+    [HospitalsLayer.id]: { ...HospitalsLayer },
+    [NonPublicSchoolsLayer.id]: { ...NonPublicSchoolsLayer },
+    [PublicSchoolsLayer.id]: { ...PublicSchoolsLayer },
+    [SuperfundSitesLayer.id]: { ...SuperfundSitesLayer },
   }
   const [activeLayerIds, setActiveLayerIds] = useState(new Set())
   const showLayer = layerId => {

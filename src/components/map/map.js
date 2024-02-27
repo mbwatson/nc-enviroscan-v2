@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import Map from 'react-map-gl'
+import Map, { Popup } from 'react-map-gl'
 import { useAppContext, useMap } from '@context'
 import {
   countiesFillLayer,
@@ -69,6 +69,16 @@ export const Mapper = ({ height, width, ...props }) => {
           const { Component } = layers.available[layerId]
           return <Component key={ layerId } />
         })
+      }
+      {
+        popup.info && (
+          <Popup
+            longitude={-100}
+            latitude={40}
+            anchor="bottom"
+            onClose={ popup.close }
+          >{ popup.info }</Popup>
+        )
       }
     </Map>
   )
