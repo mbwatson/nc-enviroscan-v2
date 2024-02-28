@@ -7,12 +7,12 @@ export const id = `hospitals`
 export const name = 'Hospitals'
 
 export const Component = () => {
-  const { hospitals } = useData()
+  const { layerData } = useData()
 
 	return (
     <PointLayer
-      source="hospitals"
-      data={ hospitals }
+      source={ id }
+      data={ layerData[id].data }
       paint={{
         'circle-color': '#f16',
         'circle-stroke-color': '#c04',

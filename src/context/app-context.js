@@ -1,7 +1,6 @@
 import { createContext, useCallback, useContext, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import { useColorScheme } from '@mui/joy/styles'
-import { useData } from '@context'
 import { useLocalStorage, useWindowSize } from '@hooks'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -57,7 +56,6 @@ export const AppContextProvider = ({ children }) => {
         },
       },
       windowSize,
-      data: useData(),
     }}>
       { children }
     </AppContext.Provider>

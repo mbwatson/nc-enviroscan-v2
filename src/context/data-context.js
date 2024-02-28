@@ -94,10 +94,6 @@ export const DataWrangler = ({ children }) => {
   return (
     <DataContext.Provider value={{
       layerData,
-      superfundSites: superfundSitesQuery.data,
-      hospitals: hospitalsQuery.data,
-      publicSchools: publicSchoolsQuery.data,
-      nonPublicSchools: nonPublicSchoolsQuery.data,
     }}>
       { children }
     </DataContext.Provider>

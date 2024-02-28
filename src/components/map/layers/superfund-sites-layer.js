@@ -6,12 +6,13 @@ export const id = `superfund-sites`
 export const name = 'Superfund Sites'
 
 export const Component = () => {
-  const { superfundSites } = useData()
+  const { layerData } = useData()
+
 
   return (
     <PointLayer
       source={ id }
-      data={ superfundSites }
+      data={ layerData[id].data }
       paint={{
         'circle-color': '#8530eb',
         'circle-stroke-color': '#330099',
