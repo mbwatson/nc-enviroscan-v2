@@ -7,10 +7,11 @@ import {
 import { useAppContext } from '@context'
 
 export const CacheToggle = ({ sx, ...props }) => {
-  const { preferences } = useAppContext()
+  const { notify, preferences } = useAppContext()
 
   const handleClick = () => {
     preferences.cache.toggle()
+    notify(`Cache is now ${ preferences.cache.enabled ? 'DIS' : 'EN' }ABLED`, 'success')
   }
 
   return (

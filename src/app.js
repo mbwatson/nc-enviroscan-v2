@@ -5,6 +5,7 @@ import { Header } from '@components/layout'
 import { routes as menuItems, Router } from './router'
 import { Preferences } from '@components/preferences'
 import { ColorModeToggle, PreferencesDrawer } from '@components/preferences'
+import { ToastContainer } from 'react-toastify'
 
 //
 
@@ -33,6 +34,16 @@ export const App = () => {
       </Sheet>
 
       <PreferencesDrawer />
+
+      <ToastContainer
+        position="top-center"
+        autoClose={ 5000 }
+        newestOnTop={ false }
+        closeOnClick
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
 
     </Fragment>
   )

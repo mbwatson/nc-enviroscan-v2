@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import { useColorScheme } from '@mui/joy/styles'
 import { useData } from '@context'
 import { useLocalStorage, useWindowSize } from '@hooks'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const AppContext = createContext({ })
 
@@ -26,9 +28,14 @@ export const AppContextProvider = ({ children }) => {
 
   const toggleCache = useCallback(() => setCache(!cache), [cache])
 
+  const notify = (message, type = 'default') => {
+    toast(message, { type })
+  }
+
   return (
     <AppContext.Provider value={{
       loading, setLoading,
+      notify,
       preferences: {
         // drawer
         visibility: drawerVisibility,
