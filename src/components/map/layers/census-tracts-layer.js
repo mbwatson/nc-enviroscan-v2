@@ -1,5 +1,5 @@
 import { Layer, Source } from 'react-map-gl'
-import censusTracts from '@content/nc-census-tracts.geojson'
+import censusTracts from '@data/nc-census-tracts.geojson'
 
 export const censusTractsFillLayer = {
   id: 'census-tracts-fill',
