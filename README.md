@@ -27,6 +27,6 @@ Commands similar to the following should suffice to build an image
 and run an NGINX container that serves only the application bundle on port 80.
 
 ```bash
-docker build -t pfas-dashboard/ui:1.0.4 . \
-docker run --rm -p 80:80 pfas-dashboard/ui:1.0.4
+docker build -t nc-enviroscan/ui:0.0.1 . \
+docker run --rm -p 80:80 nc-enviroscan/ui:0.0.1
 ```

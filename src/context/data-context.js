@@ -109,19 +109,20 @@ DataWrangler.propTypes = {
 }
 
 //
-// we want tanstack's queryClient available within our data context,
-// but we don't want layers upon layers of contexts in index.js,
-// so we export this wrapper to that provides said functionality to our
-// actual machinery in `DataWrangler`, thus we set up tanstack-query here.
+// we want tanstack's queryClient available within our data context, but we
+// don't want layers upon layers of contexts wrapping our <App /> in index.js.
+// thus we export this wrapper that provides said functionality to our
+// actual machinery in `DataWrangler`, and we set up tanstack-query here.
 
-// todo: wire up cache toggling
-
+// two queryClient options are defined here: one that caches, and one that doesn't.
+// not caching is simple:
 const nonCachingQueryClient = new QueryClient({ })
 
+// caching takes a bit more setup:
 const persister = createSyncStoragePersister({
   storage: window.localStorage,
-  serialize: (data) => compress(JSON.stringify(data)),
-  deserialize: (data) => JSON.parse(decompress(data)),
+  serialize: data => compress(JSON.stringify(data)),
+  deserialize: data => JSON.parse(decompress(data)),
 })
 const cachingQueryClient = new QueryClient({
   defaultOptions: { queries: { staleTime: Infinity } },
@@ -140,6 +141,7 @@ export const DataProvider = ({ children }) => {
   useEffect(() => {
     if (preferences.cache.enabled) {
       persistQueryClientSave({ queryClient, persister, dehydrateOptions: undefined })
+      // or persistQueryClientSubscribe ?
       return
     }
     window.localStorage.removeItem('REACT_QUERY_OFFLINE_CACHE')
