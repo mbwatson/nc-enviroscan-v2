@@ -47,8 +47,8 @@ export const ColorModeToggle = ({ sx, ...props }) => {
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}
     >
+      <LightModeIcon sx={{ color: 'orange' }} />
       <DarkModeRoundedIcon />
-      <LightModeIcon />
     </IconButton>
   )
 

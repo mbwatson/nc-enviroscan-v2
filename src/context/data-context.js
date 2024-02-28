@@ -7,18 +7,15 @@
   which feels like a circular dependency, but it's only to ensure
   our layer ids in the object housing the data align with the layer ids.
 */
-import { createContext, useContext, useEffect } from 'react'
+import { createContext, useContext } from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
 
 import { useAppContext } from '@context'
 
-import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query'
+import { QueryClient, useQuery } from '@tanstack/react-query'
+import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
 import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister'
-import {
-  persistQueryClient,
-  persistQueryClientSave,
-} from '@tanstack/react-query-persist-client'
 
 import { compress, decompress } from 'lz-string'
 
@@ -110,45 +107,38 @@ DataWrangler.propTypes = {
 // thus we export this wrapper that provides said functionality to our
 // actual machinery in `DataWrangler`, and we set up tanstack-query here.
 
-// two queryClient options are defined here: one that caches, and one that doesn't.
-// not caching is simple:
-const nonCachingQueryClient = new QueryClient({ })
-
-// caching takes a bit more setup:
 const persister = createSyncStoragePersister({
+  key: 'ENVIROSCAN_DATA_CACHE',
   storage: window.localStorage,
+  // we're dealing with a significant amount of
+  // data, and local storage isn't huge, so
+  // we want to pack it down as much as we can.
   serialize: data => compress(JSON.stringify(data)),
   deserialize: data => JSON.parse(decompress(data)),
 })
-const cachingQueryClient = new QueryClient({
-  defaultOptions: { queries: { staleTime: Infinity } },
-})
-persistQueryClient({
-  persister: persister,
-  queryClient: cachingQueryClient,
-  maxAge: Infinity,
+const queryClient = new QueryClient({
+  defaultOptions: { queries: {
+    staleTime: Infinity,
+  }, },
 })
 
 export const DataProvider = ({ children }) => {
   const { preferences } = useAppContext()
 
-  const queryClient = preferences.cache.enabled ? cachingQueryClient : nonCachingQueryClient
-
-  useEffect(() => {
-    if (preferences.cache.enabled) {
-      persistQueryClientSave({ queryClient, persister, dehydrateOptions: undefined })
-      // or persistQueryClientSubscribe ?
-      return
-    }
-    window.localStorage.removeItem('REACT_QUERY_OFFLINE_CACHE')
-  }, [queryClient])
-
   return (
-    <QueryClientProvider client={ queryClient }>
+    <PersistQueryClientProvider
+      client={ queryClient }
+      persistOptions={{
+        persister,
+        dehydrateOptions: {
+          shouldDehydrateQuery: () => preferences.cache.enabled,
+        }
+      }}
+    >
       <DataWrangler>
         { children }
       </DataWrangler>
-    </QueryClientProvider>
+    </PersistQueryClientProvider>
   )
 }
 

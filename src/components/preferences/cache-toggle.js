@@ -21,7 +21,7 @@ export const CacheToggle = ({ sx, ...props }) => {
       { ...props }
       onClick={ handleClick }
       sx={ sx }
-      color="primary"
+      color={ preferences.cache.enabled ? 'primary' : 'neutral' }
       variant={ preferences.cache.enabled ? 'solid' : 'outlined' }
     >
       <CacheIcon />
