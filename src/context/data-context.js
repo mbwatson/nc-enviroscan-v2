@@ -1,7 +1,26 @@
-import { createContext, useContext } from 'react'
+/*
+  this context provider is responsible for application data.
+  it fetches, massages, assembles, and--of course--provides data,
+  namely to the map.
+
+  we do import map layer components here from '@components/map',
+  which feels like a circular dependency, but it's only to ensure
+  our layer ids in the object housing the data align with the layer ids.
+*/
+import { createContext, useContext, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
-import { useQuery } from '@tanstack/react-query'
+
+import { useAppContext } from '@context'
+
+import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query'
+import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister'
+import {
+  persistQueryClient,
+  persistQueryClientSave,
+} from '@tanstack/react-query-persist-client'
+
+import { compress, decompress } from 'lz-string'
 
 import {
   HospitalsLayer,
@@ -11,7 +30,6 @@ import {
 } from '@components/map'
 
 const DataContext = createContext({ })
-
 export const useData = () => useContext(DataContext)
 
 const apiRoot = `https://enviroscan-drf.renci.org/drf/api/`
@@ -48,7 +66,7 @@ const createQuerier = endpoint => async () => {
     .catch(console.error)
 }
 
-export const DataProvider = ({ children }) => {
+export const DataWrangler = ({ children }) => {
   const superfundSitesQuery = useQuery({
     queryKey: ['nc_superfund_sites'],
     queryFn: createQuerier('nc_superfund_sites'),
@@ -83,6 +101,56 @@ export const DataProvider = ({ children }) => {
     }}>
       { children }
     </DataContext.Provider>
+  )
+}
+
+DataWrangler.propTypes = {
+  children: PropTypes.node,
+}
+
+//
+// we want tanstack's queryClient available within our data context,
+// but we don't want layers upon layers of contexts in index.js,
+// so we export this wrapper to that provides said functionality to our
+// actual machinery in `DataWrangler`, thus we set up tanstack-query here.
+
+// todo: wire up cache toggling
+
+const nonCachingQueryClient = new QueryClient({ })
+
+const persister = createSyncStoragePersister({
+  storage: window.localStorage,
+  serialize: (data) => compress(JSON.stringify(data)),
+  deserialize: (data) => JSON.parse(decompress(data)),
+})
+const cachingQueryClient = new QueryClient({
+  defaultOptions: { queries: { staleTime: Infinity } },
+})
+persistQueryClient({
+  persister: persister,
+  queryClient: cachingQueryClient,
+  maxAge: Infinity,
+})
+
+export const DataProvider = ({ children }) => {
+  const { preferences } = useAppContext()
+
+  const queryClient = preferences.cache.enabled ? cachingQueryClient : nonCachingQueryClient
+
+  useEffect(() => {
+    if (preferences.cache.enabled) {
+      persistQueryClientSave({ queryClient, persister, dehydrateOptions: undefined })
+      return
+    }
+    window.localStorage.removeItem('REACT_QUERY_OFFLINE_CACHE')
+  }, [queryClient])
+
+  return (
+    <QueryClientProvider client={ queryClient }>
+      <DataWrangler>
+        { children }
+      </DataWrangler>
+    </QueryClientProvider>
   )
 }
 
