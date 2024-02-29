@@ -1,10 +1,14 @@
 import { createContext, useCallback, useContext, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import { useLocalStorage } from '@hooks'
-import ncCityData from '@content/cities/nc.json'
+import ncCityData from '@data/nc-cities.json'
 import {
-  ClusterLayer,
+  CensusTractsLayer,
   CountiesLayer,
+  HospitalsLayer,
+  PublicSchoolsLayer,
+  NonPublicSchoolsLayer,
+  SuperfundSitesLayer,
 } from '@components/map'
 
 const MapContext = createContext({ })
@@ -15,14 +19,17 @@ const RALEIGH_NC = { label: 'Raleigh, NC', longitude: -78.644257, latitude: 35.7
 export const MapProvider = ({ children }) => {
   const mapRef = useRef(null)
   const [viewState, setViewState] = useLocalStorage('view-state', RALEIGH_NC)
-  const [mapStyle, setMapStyle] = useState('min')
+  const [mapStyle, setMapStyle] = useLocalStorage('map-style', 'min')
 
-  //
   const layers = {
-    'samples-cluster': ClusterLayer,
-    'counties': CountiesLayer,
+    [CensusTractsLayer.id]: { ...CensusTractsLayer },
+    [CountiesLayer.id]: { ...CountiesLayer },
+    [HospitalsLayer.id]: { ...HospitalsLayer },
+    [NonPublicSchoolsLayer.id]: { ...NonPublicSchoolsLayer },
+    [PublicSchoolsLayer.id]: { ...PublicSchoolsLayer },
+    [SuperfundSitesLayer.id]: { ...SuperfundSitesLayer },
   }
-  const [activeLayerIds, setActiveLayerIds] = useState(new Set(['samples-cluster']))
+  const [activeLayerIds, setActiveLayerIds] = useState(new Set())
   const showLayer = layerId => {
     const newIds = new Set([...activeLayerIds])
     newIds.add(layerId)
@@ -60,6 +67,7 @@ export const MapProvider = ({ children }) => {
     const options = {
       'min': colorMode === 'dark' ? 'dark-v11' : 'light-v11',
       'nav': colorMode === 'dark' ? 'navigation-night-v1' : 'navigation-day-v1',
+      'outdoors': 'outdoors-v9',
       'sat': 'satellite-v9',
     }
     return options[mapStyle]
@@ -76,7 +84,6 @@ export const MapProvider = ({ children }) => {
       duration: 2000,
     })
   }, [mapRef.current])
-
 
   return (
     <MapContext.Provider value={{

@@ -32,6 +32,7 @@ export const ColorModeToggle = ({ sx, ...props }) => {
     <IconButton
       id="toggle-color-mode"
       size="lg"
+      variant="outlined"
       color="neutral"
       { ...props }
       onClick={ preferences.colorMode.toggle }
@@ -47,8 +48,8 @@ export const ColorModeToggle = ({ sx, ...props }) => {
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}
     >
-      <DarkModeRoundedIcon />
-      <LightModeIcon />
+      <LightModeIcon sx={{ color: 'orange' }} />
+      <DarkModeRoundedIcon color="primary" />
     </IconButton>
   )
 

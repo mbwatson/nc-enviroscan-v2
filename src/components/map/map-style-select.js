@@ -9,22 +9,14 @@ export const MapStyleSelect = () => {
   const { preferences } = useAppContext()
   const { mapStyle } = useMap()
 
+  // !! room for improvement !! //
+  // these need to match options defined
+  // in `getBaseMap` of MapContext.
   const options = useMemo(() => [
-    {
-      key: 'min',
-      label: 'Minimal',
-      baseMap: preferences.colorMode.dark ? 'dark-v11' : 'light-v11',
-    },
-    {
-      key: 'nav',
-      label: 'Navigation',
-      baseMap: preferences.colorMode.dark ? 'navigation-night-v1' : 'navigation-day-v1',
-    },
-    {
-      key: 'sat',
-      label: 'Satellite',
-      baseMap: 'satellite-v9',
-    },
+    { key: 'min',      label: 'Minimal' },
+    { key: 'nav',      label: 'Navigation' },
+    { key: 'outdoors', label: 'Outdoors' },
+    { key: 'sat',      label: 'Satellite' },
 ], [preferences.colorMode])
 
   const handleSelect = useCallback(newBaseMap => () => {

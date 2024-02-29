@@ -1,15 +1,18 @@
 import {
-  Dropdown, ListDivider, ListItemDecorator, Menu, MenuButton, MenuItem,
+  CircularProgress, Dropdown,
+  ListDivider, ListItemDecorator, ListSubheader,
+  Menu, MenuButton, MenuItem,
 } from '@mui/joy'
 import {
-  Biotech as DatasetLayerIcon,
+  Place as DataLayerIcon,
   Gesture as BoundaryIcon,
   Layers as LayersIcon,
 } from '@mui/icons-material'
-import { useMap } from '@context'
+import { useData, useMap } from '@context'
 
 export const LayerSelect = () => {
   const { layers } = useMap()
+  const { layerData } = useData()
 
   const handleSelect = layerId => () => {
     layers.toggle(layerId)
@@ -23,14 +26,35 @@ export const LayerSelect = () => {
         startDecorator={ <LayersIcon /> }
       >Layers</MenuButton>
       <Menu placement="top-start" offset={ 10 }>
-        <MenuItem onClick={ handleSelect('samples-cluster') }>
-          <ListItemDecorator>
-            <DatasetLayerIcon color={ layers.active.includes('samples-cluster') ? 'primary' : 'default' } />
-          </ListItemDecorator>
-          Clustered Samples
-        </MenuItem>
+        <ListSubheader>Locations</ListSubheader>
+
+        {
+          Object.keys(layerData)
+            .sort()
+            .map(key => (
+              <MenuItem key={ key } onClick={ handleSelect(key) } disabled={ layerData[key].isPending }>
+                <ListItemDecorator>
+                  {
+                    layerData[key].isPending
+                    ? <CircularProgress variant="soft" size="sm" />
+                    : <DataLayerIcon color={ layers.active.includes(key) ? 'primary' : 'default' } />
+                  }
+                </ListItemDecorator>
+                { layers.available[key].name }
+              </MenuItem>
+            ))
+        }
 
         <ListDivider />
+
+        <ListSubheader>Boundaries</ListSubheader>
+
+        <MenuItem onClick={ handleSelect('census-tracts') }>
+          <ListItemDecorator>
+            <BoundaryIcon color={ layers.active.includes('census-tracts') ? 'primary' : 'default' } />
+          </ListItemDecorator>
+          Census Tract Boundaries
+        </MenuItem>
 
         <MenuItem onClick={ handleSelect('counties') }>
           <ListItemDecorator>

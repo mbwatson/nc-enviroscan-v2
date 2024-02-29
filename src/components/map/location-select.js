@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { useCallback, useState } from 'react'
 import {
   Divider, Dropdown, ListItemDecorator, Menu, MenuButton, MenuItem,
 } from '@mui/joy'
@@ -9,6 +9,7 @@ import {
 import { useMap } from '@context'
 
 export const LocationSelect = () => {
+  const [busy, setBusy] = useState(false)
   const { flyTo, locationPresets, mapRef } = useMap()
 
   const handleSelect = useCallback(({ longitude, latitude }) => () => {
@@ -16,6 +17,7 @@ export const LocationSelect = () => {
   }, [mapRef.current])
 
   const handleClickMyLocation = () => {
+    setBusy(true)
     if (navigator.geolocation) {
       // get the user's current location
       navigator.geolocation.getCurrentPosition(
@@ -23,10 +25,12 @@ export const LocationSelect = () => {
         position => {
           const { latitude, longitude } = position.coords
           flyTo({ latitude, longitude })
+          setBusy(false)
         },
         // if there was an error getting the user's location
         error => {
           console.error('Error getting user location:', error);
+          setBusy(false)
         }
       )
     }
@@ -38,7 +42,7 @@ export const LocationSelect = () => {
 
   return (
     <Dropdown>
-      <MenuButton>
+      <MenuButton loading={ busy }>
         <CrosshairsIcon />
       </MenuButton>
       <Menu>

@@ -12,6 +12,14 @@ The app should be viewable at [http://localhost:8080/](http://localhost:8080/).
 
 Create `.env` from `sample.env` and fill in the missing values.
 
+### React Context
+
+There is a bit of complexity we are isolating with React's Context API.
+There are three contexts and associated providers:
+- **AppContext** is responsible for site-wide configuration, user preferences, loading state, and window size
+- **DataContext** is responsible for fetching, massaging, assembling, and reconciling data for the map to consume
+- **MapContext** is responsible for layer orchestration and associated interactions
+
 ## Building for Production
 
 ### Manually
@@ -27,6 +35,6 @@ Commands similar to the following should suffice to build an image
 and run an NGINX container that serves only the application bundle on port 80.
 
 ```bash
-docker build -t pfas-dashboard/ui:1.0.4 . \
-docker run --rm -p 80:80 pfas-dashboard/ui:1.0.4
+docker build -t nc-enviroscan/ui:0.0.1 . \
+docker run --rm -p 80:80 nc-enviroscan/ui:0.0.1
 ```

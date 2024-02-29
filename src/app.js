@@ -3,8 +3,9 @@ import { Sheet } from '@mui/joy'
 import { useAppContext } from '@context'
 import { Header } from '@components/layout'
 import { routes as menuItems, Router } from './router'
-
-import { ColorModeToggle, PreferencesDrawer } from '@components/preferences'
+import { Preferences } from '@components/preferences'
+import { PreferencesDrawer } from '@components/preferences'
+import { ToastContainer } from 'react-toastify'
 
 //
 
@@ -14,7 +15,7 @@ export const App = () => {
   const headerActions = useMemo(() => {
     let actions = []
     actions = [
-      <ColorModeToggle key="color-mode-action-button" />,
+      <Preferences key="preferences" />,
       ...actions,
     ]
     return actions
@@ -32,6 +33,17 @@ export const App = () => {
       </Sheet>
 
       <PreferencesDrawer />
+
+      <ToastContainer
+        position="top-center"
+        autoClose={ 5000 }
+        newestOnTop={ false }
+        closeOnClick
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme={ preferences.colorMode.current }
+      />
 
     </Fragment>
   )
