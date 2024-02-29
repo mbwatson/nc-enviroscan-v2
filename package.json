@@ -10,7 +10,6 @@
     "lint:fix": "eslint --fix ./src/index.js ./src/components/**/*.js",
     "clean": "rm -rf dist",
     "deploy": "NODE_ENV=production webpack && gh-pages -d dist",
-    "generate": "node src/content/generator.js",
     "test": "jest"
   },
   "devDependencies": {
