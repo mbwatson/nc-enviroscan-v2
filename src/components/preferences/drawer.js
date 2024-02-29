@@ -62,10 +62,12 @@ export const PreferencesDrawer = () => {
               <ColorModeToggle />
               <div>
                 <Typography level="title-md">
-                  Current: <strong>{ preferences.colorMode.current[0].toUpperCase() + preferences.colorMode.current.slice(1) }</strong>
+                  Current: <Typography color="primary" variant="soft">{
+                    preferences.colorMode.current[0].toUpperCase() + preferences.colorMode.current.slice(1)
+                  }</Typography>
                 </Typography>
                 <Typography level="body-xs">
-                  Click to switch to <strong>{ preferences.colorMode.other[0].toUpperCase() + preferences.colorMode.other.slice(1) }</strong> mode
+                  Click to swap to <strong>{ preferences.colorMode.other[0].toUpperCase() + preferences.colorMode.other.slice(1) }</strong> mode
                 </Typography>
               </div>
             </Stack>
@@ -87,10 +89,10 @@ export const PreferencesDrawer = () => {
                   <strong>{ preferences.cache.enabled ? 'Enabled' : 'Disabled' }</strong>
                 </Typography>
                 <Typography level="body-xs">
-                  Enabling cache enhances your experience by saving
-                  geospatial data in your browser&apos;s local storage.
-                  While it persists approximately 750,000kb of data on your machine,
-                  you will only need to request this data one time.
+                  Enabling cache saves time and enhances your experience
+                  by saving data in your browser&apos;s local storage.
+                  While it persists a fair amount of raw data on your machine,
+                  it only needs to be requested once, saving time.
                 </Typography>
               </div>
             </Stack>

@@ -4,7 +4,7 @@ import { useAppContext } from '@context'
 import { Header } from '@components/layout'
 import { routes as menuItems, Router } from './router'
 import { Preferences } from '@components/preferences'
-import { ColorModeToggle, PreferencesDrawer } from '@components/preferences'
+import { PreferencesDrawer } from '@components/preferences'
 import { ToastContainer } from 'react-toastify'
 
 //
@@ -15,7 +15,6 @@ export const App = () => {
   const headerActions = useMemo(() => {
     let actions = []
     actions = [
-      <ColorModeToggle key="color-mode-action-button" />,
       <Preferences key="preferences" />,
       ...actions,
     ]
@@ -43,6 +42,7 @@ export const App = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
+        theme={ preferences.colorMode.current }
       />
 
     </Fragment>

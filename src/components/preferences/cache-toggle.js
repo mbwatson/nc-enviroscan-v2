@@ -11,7 +11,7 @@ export const CacheToggle = ({ sx, ...props }) => {
 
   const handleClick = () => {
     preferences.cache.toggle()
-    notify(`Cache is now ${ preferences.cache.enabled ? 'DIS' : 'EN' }ABLED`, 'success')
+    notify(`Cache is ${ preferences.cache.enabled ? 'dis' : 'en' }abled`, 'success')
   }
 
   return (
