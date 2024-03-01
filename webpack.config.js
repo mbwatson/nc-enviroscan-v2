@@ -102,7 +102,6 @@ module.exports = {
   devtool: 'source-map',
 
   devServer: {
-    hot: true,
     client: {
       overlay: false,
     },
