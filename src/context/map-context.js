@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useRef, useState } from 'react'
+import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import { useLocalStorage } from '@hooks'
 import ncCityData from '@data/nc-cities.json'
@@ -22,8 +22,6 @@ export const MapProvider = ({ children }) => {
   const [mapStyle, setMapStyle] = useLocalStorage('map-style', 'min')
 
   const layers = {
-    [CensusTractsLayer.id]: { ...CensusTractsLayer },
-    [CountiesLayer.id]: { ...CountiesLayer },
     [HospitalsLayer.id]: { ...HospitalsLayer },
     [NonPublicSchoolsLayer.id]: { ...NonPublicSchoolsLayer },
     [PublicSchoolsLayer.id]: { ...PublicSchoolsLayer },
@@ -47,6 +45,13 @@ export const MapProvider = ({ children }) => {
     }
     showLayer(layerId)
   }
+
+  //
+  const boundaryLayers = {
+    [CensusTractsLayer.id]: { ...CensusTractsLayer },
+    [CountiesLayer.id]: { ...CountiesLayer },
+  }
+  const [activeBoundaryLayerId, setActiveBoundaryLayerId] = useState(null)
 
   //
   const [popupInfo, setPopupInfo] = useState(null)
@@ -75,7 +80,7 @@ export const MapProvider = ({ children }) => {
 
   //
   const flyTo = useCallback(({ latitude, longitude }) => {
-    if (!mapRef.current){
+    if (!mapRef.current) {
       return
     }
     mapRef.current.flyTo({
@@ -84,6 +89,15 @@ export const MapProvider = ({ children }) => {
       duration: 2000,
     })
   }, [mapRef.current])
+
+  // think: "hovered" or "highlighted" in practice
+  const [engagedFeature, setEngagedFeature] = useState(null)
+  useEffect(() => {
+    setEngagedFeature(null)
+  }, [activeBoundaryLayerId])
+
+  // think: "selected"
+  const [activeRegion, setActiveRegion] = useState(null)
 
   return (
     <MapContext.Provider value={{
@@ -98,6 +112,7 @@ export const MapProvider = ({ children }) => {
         getBaseMap,
       },
       locationPresets,
+      flyTo,
       popup: {
         info: popupInfo,
         set: setPopupInfo,
@@ -110,7 +125,19 @@ export const MapProvider = ({ children }) => {
         show: showLayer,
         hide: hideLayer,
       },
-      flyTo,
+      boundary: {
+        available: boundaryLayers,
+        current: activeBoundaryLayerId,
+        set: setActiveBoundaryLayerId,
+      },
+      engagedFeature: {
+        current: engagedFeature,
+        set: setEngagedFeature,
+      },
+      activeRegion: {
+        current: activeRegion,
+        set: setActiveRegion,
+      },
     }}>
       { children }
     </MapContext.Provider>

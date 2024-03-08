@@ -6,7 +6,7 @@ export const censusTractsFillLayer = {
   source: 'census-tracts',
   type: 'fill',
   paint: {
-    'fill-outline-color': '#00c840',
+    'fill-outline-color': '#0040c8',
     'fill-color': '#fff',
     'fill-opacity': 0,
   }
@@ -18,7 +18,7 @@ const censusTractsLineLayer = {
   type: 'line',
   paint: {
     'line-width': 1,
-    'line-color': '#00ef80',
+    'line-color': '#0080ef',
   }
 }
 
