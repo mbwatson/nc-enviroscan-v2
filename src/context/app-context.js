@@ -13,7 +13,7 @@ export const AppContextProvider = ({ children }) => {
   const windowSize = useWindowSize()
   const { mode, setMode } = useColorScheme()
   const [cache, setCache] = useLocalStorage('use-cache', false)
-  const [drawerVisibility, setDrawerVisibility] = useState(false)
+  const [drawerVisibility, setDrawerVisibility] = useState(true)
   const [loading, setLoading] = useState(false)
 
   const togglePreferences = () => setDrawerVisibility(!drawerVisibility)

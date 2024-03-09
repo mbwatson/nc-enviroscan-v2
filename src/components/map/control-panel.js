@@ -8,7 +8,6 @@ import {
 import { LayerSelect } from './layer-select'
 import { BoundarySelect } from './boundary-select'
 import { LocationSelect } from './location-select'
-import { MapStyleSelect } from './map-style-select'
 
 export const ControlPanel = () => {
 
@@ -41,14 +40,6 @@ export const ControlPanel = () => {
         <Tooltip placement="bottom" title="Locations">
           <ListItem role="none">
             <LocationSelect />
-          </ListItem>
-        </Tooltip>
-        
-        <ListDivider />
-
-        <Tooltip placement="bottom" title="Map Style">
-          <ListItem role="none">
-            <MapStyleSelect />
           </ListItem>
         </Tooltip>
         

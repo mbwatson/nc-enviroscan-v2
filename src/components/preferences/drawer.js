@@ -14,6 +14,7 @@ import { Tune as MenuIcon } from '@mui/icons-material'
 import { useAppContext } from '@context'
 import { CacheToggle } from './cache-toggle'
 import { ColorModeToggle } from './color-mode-toggle'
+import { MapStyleSelect } from './map-style-select'
 
 export const PreferencesDrawer = () => {
   const { preferences } = useAppContext()
@@ -39,6 +40,8 @@ export const PreferencesDrawer = () => {
         p: 2,
         height: '100%',
         overflow: 'auto',
+        '.MuiDivider-root:first-of-type': { mb: 2 },
+        '.MuiDivider-root:not(:first-of-type)': { my: 2 },
       }}>
         <Stack
           display="flex"
@@ -62,14 +65,34 @@ export const PreferencesDrawer = () => {
               <ColorModeToggle />
               <div>
                 <Typography level="title-md">
-                  Current: <Typography color="primary" variant="soft">{
+                  In <Typography color="primary" variant="soft">{
                     preferences.colorMode.current[0].toUpperCase() + preferences.colorMode.current.slice(1)
-                  }</Typography>
+                  }</Typography> Mode
                 </Typography>
                 <Typography level="body-xs">
                   Click to swap to <strong>{ preferences.colorMode.other[0].toUpperCase() + preferences.colorMode.other.slice(1) }</strong> mode
                 </Typography>
               </div>
+            </Stack>
+          </DialogContent>
+
+          <Divider />
+
+          <DialogContent sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 2,
+            '.MuiSelect-root': { flex: 1 },
+          }}>
+            <Typography level="title-lg">Map Style</Typography>
+            <Stack
+              direction="row"
+              justifyContent="flex-start"
+              alignItems="center"
+              gap={ 2 }
+            >
+              <Typography level="title-md">Base Map:</Typography>
+              <MapStyleSelect />
             </Stack>
           </DialogContent>
 
@@ -91,8 +114,6 @@ export const PreferencesDrawer = () => {
                 <Typography level="body-xs">
                   Enabling cache saves time and enhances your experience
                   by saving data in your browser&apos;s local storage.
-                  While it persists a fair amount of raw data on your machine,
-                  it only needs to be requested once, saving time.
                 </Typography>
               </div>
             </Stack>
