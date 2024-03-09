@@ -27,7 +27,7 @@ export const MapProvider = ({ children }) => {
     [PublicSchoolsLayer.id]: { ...PublicSchoolsLayer },
     [SuperfundSitesLayer.id]: { ...SuperfundSitesLayer },
   }
-  const [activeLayerIds, setActiveLayerIds] = useState(new Set())
+  const [activeLayerIds, setActiveLayerIds] = useState(new Set(['public-schools', 'hospitals']))
   const showLayer = layerId => {
     const newIds = new Set([...activeLayerIds])
     newIds.add(layerId)
@@ -51,7 +51,7 @@ export const MapProvider = ({ children }) => {
     [CensusTractsLayer.id]: { ...CensusTractsLayer },
     [CountiesLayer.id]: { ...CountiesLayer },
   }
-  const [activeBoundaryLayerId, setActiveBoundaryLayerId] = useState(null)
+  const [activeBoundaryLayerId, setActiveBoundaryLayerId] = useState('counties')
 
   //
   const [popupInfo, setPopupInfo] = useState(null)

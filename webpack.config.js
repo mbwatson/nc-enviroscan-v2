@@ -96,6 +96,7 @@ module.exports = {
       '@data': path.resolve(__dirname, 'src/data/'),
       '@hooks': path.resolve(__dirname, 'src/hooks/'),
       '@images': path.resolve(__dirname, 'src/images/'),
+      '@util': path.resolve(__dirname, 'src/util/'),
     }
   },
 

@@ -38,7 +38,3 @@ export const Component = () => {
     </Source>
   )
 }
-
-// export const onClick = ({ event, feature }) => {
-//   console.log(feature)
-// }

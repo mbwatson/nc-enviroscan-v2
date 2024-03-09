@@ -4,8 +4,8 @@ import { Box } from '@mui/joy'
 import Map, { Layer, Popup, Source } from 'react-map-gl'
 import { useAppContext, useMap } from '@context'
 
-import { censusTractsFillLayer } from './layers/census-tracts-layer'
-import { countiesFillLayer } from './layers/counties-layer'
+import { censusTractsFillLayer } from './layers/boundaries/census-tracts-layer'
+import { countiesFillLayer } from './layers/boundaries/counties-layer'
 
 const interactiveLayerIds = [
   censusTractsFillLayer.id,
