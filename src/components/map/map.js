@@ -16,7 +16,7 @@ export const Mapper = ({ height, width, ...props }) => {
   const { setLoading, preferences } = useAppContext()
   const {
     activeRegion, engagedFeature, boundary,
-    mapRef, mapStyle, layers, popup, viewState,
+    mapRef, layers, popup, viewState,
   } = useMap()
   const [cursor, setCursor] = useState('auto')
 
@@ -90,7 +90,7 @@ export const Mapper = ({ height, width, ...props }) => {
       onMouseLeave={ onMouseLeave }
       cursor={ cursor }
       interactiveLayerIds={ interactiveLayerIds }
-      mapStyle={ `mapbox://styles/mapbox/${ mapStyle.getBaseMap(preferences.colorMode.current) }` }
+      mapStyle={ `mapbox://styles/mapbox/${ preferences.mapStyle.baseMap }` }
       { ...props }
       source="mapbox://mvvatson.clkpnbbi50bu62dp5dxh26pee-5d8sq"
       mapboxAccessToken={ process.env.MAPBOX_TOKEN }

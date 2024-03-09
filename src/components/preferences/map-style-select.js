@@ -1,37 +1,64 @@
-import { useMemo } from 'react'
-import { Option, Select } from '@mui/joy'
-import { useAppContext, useMap } from '@context'
+import { Fragment, useMemo } from 'react'
+import {
+  Avatar,
+  ListItemContent,
+  ListItemDecorator,
+  Option,
+  Select,
+} from '@mui/joy'
+import { useAppContext } from '@context'
 
 export const MapStyleSelect = () => {
   const { preferences } = useAppContext()
-  const { mapStyle } = useMap()
 
-  // !! room for improvement !! //
-  // these need to match options defined
-  // in `getBaseMap` of MapContext.
   const options = useMemo(() => [
-    { key: 'min',      label: 'Minimal' },
-    { key: 'nav',      label: 'Navigation' },
-    { key: 'outdoors', label: 'Outdoors' },
-    { key: 'sat',      label: 'Satellite' },
-], [preferences.colorMode])
+    { key: 'min',      label: 'Minimal',    baseMap: `${ preferences.mapStyle.getBaseMap('min') }` },
+    { key: 'nav',      label: 'Navigation', baseMap: `${ preferences.mapStyle.getBaseMap('nav') }` },
+    { key: 'outdoors', label: 'Outdoors',   baseMap: `${ preferences.mapStyle.getBaseMap('outdoors') }` },
+    { key: 'sat',      label: 'Satellite',  baseMap: `${ preferences.mapStyle.getBaseMap('sat') }` },
+  ], [preferences.colorMode])
 
   const handleChange = (event, newValue) => {
-    mapStyle.set(newValue)
+    preferences.mapStyle.set(newValue)
   }
 
   return (
     <Select
-      value={ mapStyle.current }
+      value={ preferences.mapStyle.current }
       onChange={ handleChange }
+      renderValue={
+        option => (
+          <Fragment>
+            <ListItemDecorator>
+              <Avatar
+                size="sm"
+                src={ preferences.mapStyle.baseMapThumbnail }
+                sx={{ borderRadius: '15%' }}
+              />
+            </ListItemDecorator>
+            <ListItemContent>{ option.label }</ListItemContent>
+          </Fragment>
+        )
+      }
     >
       {
-        options.map(option => (
-          <Option
-            key={ option.key }
-            value={ option.key }
-          >{ option.label }</Option>
-        ))
+        options.map(option => {
+          return (
+            <Option
+              key={ option.key }
+              value={ option.key }
+            >
+              <ListItemDecorator>
+                <Avatar
+                  size="sm"
+                  src={ preferences.mapStyle.getBaseMapThumbnail(option.baseMap) }
+                  sx={{ borderRadius: '15%' }}
+                />
+              </ListItemDecorator>
+              <ListItemContent>{ option.label }</ListItemContent>
+            </Option>
+          )
+        })
       }
     </Select>
   )
