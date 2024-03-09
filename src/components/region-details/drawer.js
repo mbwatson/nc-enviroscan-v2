@@ -45,9 +45,9 @@ export const ActiveRegionDrawer = () => {
         }, },
         content: { sx: {
           bgcolor: 'transparent',
-          p: 4,
-          pt: 13,
-          pb: 16,
+          pl: 2,
+          pt: 11,
+          pb: 11,
           boxShadow: 'none',
           width: '100%',
           maxWidth: '750px',

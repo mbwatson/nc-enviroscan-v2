@@ -1,7 +1,6 @@
 import {
   Card,
   List,
-  ListDivider,
   ListItem,
   Tooltip,
 } from '@mui/joy'
@@ -19,13 +18,16 @@ export const ControlPanel = () => {
       bottom: 0,
       left: 0,
       right: 0,
-      m: 4,
+      m: 2,
       overflow: 'hidden',
       px: 0.5, py: 1, pr: 1,
       overflowX: 'auto',
       '.MuiList-root': {
         p: 0,
         flex: 1,
+        display: 'flex',
+        justifyContent: 'space-between',
+        gap: 1,
       },
       '.MuiButton-root': { gap: 1 },
     }}>
@@ -34,8 +36,6 @@ export const ControlPanel = () => {
           <LayerSelect />
           <BoundarySelect />
         </ListItem>
-
-        <ListDivider />
 
         <Tooltip placement="bottom" title="Locations">
           <ListItem role="none">
