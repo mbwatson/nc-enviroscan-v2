@@ -9,17 +9,17 @@ export const countiesFillLayer = {
     'fill-outline-color': '#0040c8',
     'fill-color': '#fff',
     'fill-opacity': 0,
-  }
-};
+  },
+}
 
 const countiesLineLayer = {
   id: 'counties-outline',
   source: 'counties',
   type: 'line',
   paint: {
-    'line-width': 2,
+    'line-width': 1,
     'line-color': '#0080ef',
-  }
+  },
 }
 
 export const id = 'counties'
@@ -38,4 +38,3 @@ export const Component = () => {
     </Source>
   )
 }
-

@@ -10,7 +10,7 @@ export const ViewStatePanel = () => {
     <Card sx={{
       position: 'absolute',
       zIndex: 9,
-      bottom: '8rem', right: '2rem',
+      bottom: '6rem', right: '1rem',
       maxWidth: '200px',
       '.MuiTypography-root': {
         whiteSpace: 'nowrap',

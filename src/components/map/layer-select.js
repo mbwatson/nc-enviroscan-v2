@@ -1,11 +1,9 @@
 import {
-  CircularProgress, Dropdown,
-  ListDivider, ListItemDecorator, ListSubheader,
+  CircularProgress, Dropdown, ListItemDecorator,
   Menu, MenuButton, MenuItem,
 } from '@mui/joy'
 import {
   Place as DataLayerIcon,
-  Gesture as BoundaryIcon,
   Layers as LayersIcon,
 } from '@mui/icons-material'
 import { useData, useMap } from '@context'
@@ -21,13 +19,11 @@ export const LayerSelect = () => {
   return (
     <Dropdown>
       <MenuButton
-        variant="soft"
         color="primary"
+        variant={ layers.active.length > 0 ? 'solid' : 'soft' }
         startDecorator={ <LayersIcon /> }
-      >Layers</MenuButton>
+      >Layers { layers.active.length > 0 ? `(${ layers.active.length })` : '' }</MenuButton>
       <Menu placement="top-start" offset={ 10 }>
-        <ListSubheader>Locations</ListSubheader>
-
         {
           Object.keys(layerData)
             .sort()
@@ -44,25 +40,6 @@ export const LayerSelect = () => {
               </MenuItem>
             ))
         }
-
-        <ListDivider />
-
-        <ListSubheader>Boundaries</ListSubheader>
-
-        <MenuItem onClick={ handleSelect('census-tracts') }>
-          <ListItemDecorator>
-            <BoundaryIcon color={ layers.active.includes('census-tracts') ? 'primary' : 'default' } />
-          </ListItemDecorator>
-          Census Tract Boundaries
-        </MenuItem>
-
-        <MenuItem onClick={ handleSelect('counties') }>
-          <ListItemDecorator>
-            <BoundaryIcon color={ layers.active.includes('counties') ? 'primary' : 'default' } />
-          </ListItemDecorator>
-          County Boundaries
-        </MenuItem>
-
       </Menu>
     </Dropdown>
   )

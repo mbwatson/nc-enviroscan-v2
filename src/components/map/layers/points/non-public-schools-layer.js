@@ -21,3 +21,6 @@ export const Component = () => {
   )
 }
 
+export const accessor = {
+  name: 'properties.schoolname',
+}

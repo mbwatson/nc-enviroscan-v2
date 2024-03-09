@@ -5,6 +5,7 @@ import { Header } from '@components/layout'
 import { routes as menuItems, Router } from './router'
 import { Preferences } from '@components/preferences'
 import { PreferencesDrawer } from '@components/preferences'
+import { ActiveRegionDrawer } from '@components/region-details'
 import { ToastContainer } from 'react-toastify'
 
 //
@@ -33,6 +34,8 @@ export const App = () => {
       </Sheet>
 
       <PreferencesDrawer />
+
+      <ActiveRegionDrawer />
 
       <ToastContainer
         position="top-center"
