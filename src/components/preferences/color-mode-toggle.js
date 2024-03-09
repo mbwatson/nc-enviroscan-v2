@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { IconButton } from '@mui/joy'
 import {
@@ -10,9 +10,9 @@ import { useAppContext } from '@context'
 export const ColorModeToggle = ({ sx, ...props }) => {
   const { preferences } = useAppContext()
 
-  const [mounted, setMounted] = React.useState(false)
+  const [mounted, setMounted] = useState(false)
 
-  React.useEffect(() => {
+  useEffect(() => {
     setMounted(true)
   }, [])
 
