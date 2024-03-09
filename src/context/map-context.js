@@ -50,7 +50,7 @@ export const MapProvider = ({ children }) => {
     [CensusTractsLayer.id]: { ...CensusTractsLayer },
     [CountiesLayer.id]: { ...CountiesLayer },
   }
-  const [activeBoundaryLayerId, setActiveBoundaryLayerId] = useState('counties')
+  const [activeBoundaryLayerId, setActiveBoundaryLayerId] = useLocalStorage('boundary', 'counties')
 
   //
   const [popupInfo, setPopupInfo] = useState(null)

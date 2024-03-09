@@ -65,10 +65,10 @@ export const Mapper = ({ height, width, ...props }) => {
     : null, [boundary.current])
 
   const engagedFeatureStyle = useMemo(() => ({
-    type: 'fill',
+    type: 'line',
     paint: {
-      'fill-color': '#0080ef',
-      'fill-opacity': 0.33,
+      'line-width': 5,
+      'line-color': '#33aaff',
     }
   }), [engagedFeature.current])
 
