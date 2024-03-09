@@ -54,6 +54,7 @@ export const PreferencesDrawer = () => {
           
           <Divider />
 
+          {/* Color Mode */}
           <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <Typography level="title-lg">Color Mode</Typography>
             <Stack
@@ -78,6 +79,7 @@ export const PreferencesDrawer = () => {
 
           <Divider />
 
+          {/* Map Style */}
           <DialogContent sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -98,6 +100,7 @@ export const PreferencesDrawer = () => {
 
           <Divider />
           
+          {/* Caching */}
           <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <Typography level="title-lg">Cache</Typography>
             <Stack
