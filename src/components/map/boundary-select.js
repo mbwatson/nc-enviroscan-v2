@@ -1,9 +1,14 @@
 import {
-  Divider, Dropdown, ListItemDecorator,
-  Menu, MenuButton, MenuItem,
+  Divider,
+  Dropdown,
+  ListItemDecorator,
+  Menu,
+  MenuButton,
+  MenuItem,
 } from '@mui/joy'
 import {
-  Grid3x3 as BoundaryIcon,
+  Gesture as BoundaryIcon,
+  Delete as ClearBoundaryIcon,
   Layers as LayersIcon,
 } from '@mui/icons-material'
 import { useMap } from '@context'
@@ -40,9 +45,13 @@ export const BoundarySelect = () => {
 
         <Divider />
 
-        <MenuItem onClick={ () => boundary.set(null) }>
+        <MenuItem
+          onClick={ () => boundary.set(null) }
+          disabled={ !boundary.current }
+          color="warning"
+        >
           <ListItemDecorator>
-            <BoundaryIcon color={ boundary.current ? 'default' : 'primary' } />
+            <ClearBoundaryIcon />
           </ListItemDecorator>
           None
         </MenuItem>

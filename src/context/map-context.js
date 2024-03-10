@@ -44,6 +44,7 @@ export const MapProvider = ({ children }) => {
     }
     showLayer(layerId)
   }
+  const deactivateAllLayers = () => setActiveLayerIds(new Set())
 
   //
   const boundaryLayers = {
@@ -108,6 +109,7 @@ export const MapProvider = ({ children }) => {
         toggle: toggleLayer,
         show: showLayer,
         hide: hideLayer,
+        clear: deactivateAllLayers,
       },
       boundary: {
         available: boundaryLayers,

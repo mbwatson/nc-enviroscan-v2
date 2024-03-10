@@ -9,7 +9,6 @@ import { BoundarySelect } from './boundary-select'
 import { LocationSelect } from './location-select'
 
 export const ControlPanel = () => {
-
   return (
     <Card sx={{
       flexDirection: 'row',

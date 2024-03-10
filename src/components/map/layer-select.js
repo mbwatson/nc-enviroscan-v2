@@ -1,10 +1,16 @@
 import {
-  CircularProgress, Dropdown, ListItemDecorator,
-  Menu, MenuButton, MenuItem,
+  CircularProgress,
+  Divider,
+  Dropdown,
+  ListItemDecorator,
+  Menu,
+  MenuButton,
+  MenuItem,
 } from '@mui/joy'
 import {
   Place as DataLayerIcon,
   Layers as LayersIcon,
+  Delete as ClearLayersIcon,
 } from '@mui/icons-material'
 import { useData, useMap } from '@context'
 
@@ -40,6 +46,20 @@ export const LayerSelect = () => {
               </MenuItem>
             ))
         }
+        
+        <Divider />
+
+        <MenuItem
+          onClick={ () => layers.clear() }
+          disabled={ layers.active.length === 0 }
+          color="warning"
+        >
+          <ListItemDecorator>
+            <ClearLayersIcon />
+          </ListItemDecorator>
+          None
+        </MenuItem>
+
       </Menu>
     </Dropdown>
   )
