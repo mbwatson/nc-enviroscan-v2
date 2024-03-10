@@ -36,6 +36,10 @@ export const ContainedFeaturesList = ({ features, source }) => {
       }}
     >
       {
+        // here we list points features lying within our
+        // active region, grouped in alphabetical list of
+        // the active latyer in which they lie.
+        // !! room for improvement.
         features
           .map(feature => [deepValue(feature, accessor.name), feature])
           .sort(([fName], [gName]) => fName < gName ? -1 : 1)
@@ -58,7 +62,7 @@ ContainedFeaturesList.propTypes = {
 export const RegionFeatures = () => {
   const { layerData } = useData()
   const { activeRegion, layers } = useMap()
-  
+
   const regionPolygon = useMemo(() => {
     if (!activeRegion.current) {
       return []

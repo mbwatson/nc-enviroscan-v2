@@ -10,6 +10,7 @@ import {
 } from '@mui/joy'
 import { useMap } from '@context'
 import { RegionFeatures } from './region-features'
+import { RegionMetadata } from './region-metadata'
 
 const regionTitle = region => {
   if (!region) {
@@ -84,6 +85,12 @@ export const ActiveRegionDrawer = () => {
 
           <DialogContent>
             <RegionFeatures />
+          </DialogContent>
+
+          <Divider />
+
+          <DialogContent>
+            <RegionMetadata />
           </DialogContent>
 
           <Divider />
