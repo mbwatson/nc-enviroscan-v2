@@ -63,6 +63,9 @@ const StyleSelect = () => {
           sx={{ borderRadius: '15%' }}
         />
       ) }
+      slotProps={{
+        listbox: { placement: 'right-start' },
+      }}
       sx={{
         minWidth: '44px',
         maxWidth: '44px',

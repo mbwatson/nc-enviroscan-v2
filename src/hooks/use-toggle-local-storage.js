@@ -7,6 +7,7 @@ export const useToggleLocalStorage = key => {
 
   return {
     enabled: value,
+    disabled: !value,
     toggle: toggleValue,
   }
 }

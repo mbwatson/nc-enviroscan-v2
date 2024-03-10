@@ -63,7 +63,14 @@ export const RegionFeatures = () => {
     if (!activeRegion.current) {
       return []
     }
-    return activeRegion.current.geometry.coordinates
+    if (activeRegion.current.geometry.type === 'Polygon') {
+      return activeRegion.current.geometry.coordinates
+    }
+    // can't yet handle multipolygon, so we just
+    // use the first polygon for now.
+    if (activeRegion.current.geometry.type === 'MultiPolygon') {
+      return activeRegion.current.geometry.coordinates[0]
+    }
   }, [activeRegion.current])
 
   if (!activeRegion.current) {

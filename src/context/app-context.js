@@ -56,10 +56,10 @@ const useMapStyle = (colorMode) => {
   }
 }
 
-// this context essentially pulls all the others together,
-// responsible for collecting all the functionality used
-// throughout the application and reconciling the related
-// states that depend on one another.
+// this context essentially pulls all the other contexts
+// together, responsible for collecting all the
+// functionality used throughout the application and
+// reconciling the related states that depend on one another.
 export const AppContextProvider = ({ children }) => {
   const windowSize = useWindowSize()
   const [loading, setLoading] = useState(false)
@@ -83,6 +83,8 @@ export const AppContextProvider = ({ children }) => {
   
   const cache = useToggleLocalStorage('use-cache')
 
+  const shouldZoomToRegion = useToggleLocalStorage('zoom-to-bounds')
+
   const notify = (message, type = 'default') => {
     toast(message, { type })
   }
@@ -101,6 +103,7 @@ export const AppContextProvider = ({ children }) => {
           dark: inDarkMode,
         },
         mapStyle,
+        shouldZoomToRegion,
         cache,
       },
       windowSize,

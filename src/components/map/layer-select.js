@@ -2,6 +2,7 @@ import {
   CircularProgress,
   Divider,
   Dropdown,
+  ListItemContent,
   ListItemDecorator,
   Menu,
   MenuButton,
@@ -9,8 +10,10 @@ import {
 } from '@mui/joy'
 import {
   Place as DataLayerIcon,
+  ClearAll as ClearLayersIcon,
+  ArrowDropUp as ExpandUpIcon,
   Layers as LayersIcon,
-  Delete as ClearLayersIcon,
+  Check as SelectedIcon,
 } from '@mui/icons-material'
 import { useData, useMap } from '@context'
 
@@ -28,6 +31,7 @@ export const LayerSelect = () => {
         color="primary"
         variant={ layers.active.length > 0 ? 'solid' : 'soft' }
         startDecorator={ <LayersIcon /> }
+        endDecorator={ <ExpandUpIcon /> }
       >Layers { layers.active.length > 0 ? `(${ layers.active.length })` : '' }</MenuButton>
       <Menu placement="top-start" offset={ 10 }>
         {
@@ -42,7 +46,16 @@ export const LayerSelect = () => {
                     : <DataLayerIcon color={ layers.active.includes(key) ? 'primary' : 'default' } />
                   }
                 </ListItemDecorator>
-                { layers.available[key].name }
+                <ListItemContent>
+                  { layers.available[key].name }
+                </ListItemContent>
+                <ListItemDecorator>
+                  {
+                    layers.active.includes(key)
+                    ? <SelectedIcon size="sm" color="primary" />
+                    : null
+                  }
+                </ListItemDecorator>
               </MenuItem>
             ))
         }
@@ -57,7 +70,7 @@ export const LayerSelect = () => {
           <ListItemDecorator>
             <ClearLayersIcon />
           </ListItemDecorator>
-          None
+          Deselect All
         </MenuItem>
 
       </Menu>

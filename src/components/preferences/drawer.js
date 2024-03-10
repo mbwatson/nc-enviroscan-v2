@@ -16,6 +16,7 @@ import { CacheSelect } from './cache-select'
 import { ColorModeSelect } from './color-mode-select'
 import { BoundaryColorSelect } from './boundary-color-select'
 import { MapStyleSelect } from './map-style-select'
+import { ZoomToRegionSelect } from './zoom-to-region-select'
 
 export const PreferencesDrawer = () => {
   const { preferences } = useAppContext()
@@ -57,17 +58,18 @@ export const PreferencesDrawer = () => {
 
           <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <Typography level="title-md">Look & Feel</Typography>
+            
             <ColorModeSelect />
             <MapStyleSelect />
             <BoundaryColorSelect />
           </DialogContent>
 
           <Divider />
-          
-          {/* Caching */}
-          <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <Typography level="title-md">Cache</Typography>
 
+          <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <Typography level="title-md">Behavior</Typography>
+
+            <ZoomToRegionSelect />
             <CacheSelect />
           </DialogContent>
 

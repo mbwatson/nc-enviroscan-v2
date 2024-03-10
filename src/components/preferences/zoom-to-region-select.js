@@ -5,11 +5,11 @@ import {
   Typography,
 } from '@mui/joy'
 import {
-  Inventory as CacheIcon,
+  FitScreen as ZoomToRegionIcon,
 } from '@mui/icons-material'
 import { useAppContext } from '@context'
 
-export const CacheSelect = () => {
+export const ZoomToRegionSelect = () => {
   const { preferences } = useAppContext()
   
   return (
@@ -19,40 +19,41 @@ export const CacheSelect = () => {
       alignItems="flex-start"
       gap={ 2 }
     >
-      <CacheToggle />
+      <ZoomToRegionToggle />
       <div>
         <Typography level="title-md">
-          Cache <Typography variant="soft" color="primary">{
-            preferences.cache.enabled ? 'Enabled' : 'Disabled'
+          Zoom-to-Selection <Typography variant="soft" color="primary">{
+            preferences.shouldZoomToRegion.enabled ? 'Enabled' : 'Disabled'
           }</Typography>
         </Typography>
         <Typography level="body-xs">
-          Enabling cache saves time and enhances your experience
-          by saving data in your browser&apos;s local storage.
+          With this enabled, selecting a region will adjust the
+          map viewport to fit the region in the available space.
         </Typography>
       </div>
     </Stack>
   )
 }
 
-export const CacheToggle = () => {
+const ZoomToRegionToggle = () => {
   const { notify, preferences } = useAppContext()
 
   const handleClick = () => {
-    preferences.cache.toggle()
-    notify(`Cache is ${ preferences.cache.enabled ? 'dis' : 'en' }abled`, 'success')
+    preferences.shouldZoomToRegion.toggle()
+    notify(`Zoom to Region is ${ preferences.shouldZoomToRegion.enabled ? 'dis' : 'en' }abled`, 'success')
   }
 
   return (
     <IconButton
-      id="cache-mode"
+      id="zoom-to-bounds-mode"
       size="lg"
       onClick={ handleClick }
       variant="outlined"
     >
-      <CacheIcon
-        color={ preferences.cache.enabled ? 'primary' : 'neutral' }
+      <ZoomToRegionIcon
+        color={ preferences.shouldZoomToRegion.enabled ? 'primary' : 'neutral' }
       />
     </IconButton>
   )
+
 }

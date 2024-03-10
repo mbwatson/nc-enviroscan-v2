@@ -1,4 +1,11 @@
-import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react'
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import PropTypes from 'prop-types'
 import { useLocalStorage } from '@hooks'
 import ncCityData from '@data/nc-cities.json'
@@ -80,6 +87,13 @@ export const MapProvider = ({ children }) => {
     })
   }, [mapRef.current])
 
+  const fitBounds = useCallback(bounds => {
+    if (!mapRef.current) {
+      return
+    }
+    mapRef.current.fitBounds(bounds)
+  }, [mapRef.current])
+
   // think: "hovered" or "highlighted" in practice
   const [engagedFeature, setEngagedFeature] = useState(null)
   useEffect(() => {
@@ -98,6 +112,7 @@ export const MapProvider = ({ children }) => {
       },
       locationPresets,
       flyTo,
+      fitBounds,
       popup: {
         info: popupInfo,
         set: setPopupInfo,

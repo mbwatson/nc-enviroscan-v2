@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
 import {
   IconButton,
   Stack,
   Typography,
 } from '@mui/joy'
+import { useTheme } from '@mui/joy/styles'
 import {
   DarkModeRounded as DarkModeRoundedIcon,
   LightMode as LightModeIcon,
@@ -12,6 +12,7 @@ import {
 import { useAppContext } from '@context'
 
 export const ColorModeSelect = () => {
+  const theme = useTheme()
   const { preferences } = useAppContext()
 
   return (
@@ -20,6 +21,11 @@ export const ColorModeSelect = () => {
       justifyContent="flex-start"
       alignItems="center"
       gap={ 2 }
+      sx={{
+        '.glow': {
+          textShadow: `0 0 1px rgba(${theme.vars.palette.primary.mainChannel}), 0 0 3px rgba(${theme.vars.palette.primary.mainChannel})`
+        },
+      }}
     >
       <ColorModeToggle />
       <div>
@@ -29,14 +35,14 @@ export const ColorModeSelect = () => {
           }</Typography> Mode
         </Typography>
         <Typography level="body-xs">
-          Click to swap to <strong>{ preferences.colorMode.other[0].toUpperCase() + preferences.colorMode.other.slice(1) }</strong> mode
+          Click to switch to <Typography className="glow">{ preferences.colorMode.other[0].toUpperCase() + preferences.colorMode.other.slice(1) }</Typography> mode
         </Typography>
       </div>
     </Stack>
   )
 }
 
-const ColorModeToggle = ({ sx, ...props }) => {
+const ColorModeToggle = () => {
   const { preferences } = useAppContext()
 
   const [mounted, setMounted] = useState(false)
@@ -50,8 +56,6 @@ const ColorModeToggle = ({ sx, ...props }) => {
       <IconButton
         size="lg"
         color="neutral"
-        { ...props }
-        sx={ sx }
         disabled
       />
     )
@@ -63,7 +67,6 @@ const ColorModeToggle = ({ sx, ...props }) => {
       size="lg"
       variant="outlined"
       color="neutral"
-      { ...props }
       onClick={ preferences.colorMode.toggle }
       sx={[
         {
@@ -74,7 +77,6 @@ const ColorModeToggle = ({ sx, ...props }) => {
             display: preferences.colorMode.light ? 'none' : 'initial',
           },
         },
-        ...(Array.isArray(sx) ? sx : [sx]),
       ]}
     >
       <LightModeIcon sx={{ color: 'orange' }} />
@@ -82,8 +84,4 @@ const ColorModeToggle = ({ sx, ...props }) => {
     </IconButton>
   )
 
-}
-
-ColorModeToggle.propTypes = {
-  sx: PropTypes.object,
 }
