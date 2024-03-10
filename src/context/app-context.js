@@ -49,6 +49,8 @@ export const AppContextProvider = ({ children }) => {
     'satellite-v9': Satellite,
   }), [])
 
+  const [boundaryColor, setBoundaryColor] = useLocalStorage('boundary-color')
+
   const toggleCache = useCallback(() => setCache(!cache), [cache])
 
   const notify = (message, type = 'default') => {
@@ -81,6 +83,10 @@ export const AppContextProvider = ({ children }) => {
           baseMapThumbnail: baseMapThumbnails[baseMap[mapStyle]],
           getBaseMap: _mapStyle => baseMap[_mapStyle],
           getBaseMapThumbnail: _mapStyle => baseMapThumbnails[_mapStyle],
+          boundaryColor: {
+            current: boundaryColor,
+            set: setBoundaryColor,
+          },
         },
         // cache
         cache: {

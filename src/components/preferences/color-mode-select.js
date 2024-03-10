@@ -1,13 +1,42 @@
 import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import { IconButton } from '@mui/joy'
+import {
+  IconButton,
+  Stack,
+  Typography,
+} from '@mui/joy'
 import {
   DarkModeRounded as DarkModeRoundedIcon,
   LightMode as LightModeIcon,
 } from '@mui/icons-material'
 import { useAppContext } from '@context'
 
-export const ColorModeToggle = ({ sx, ...props }) => {
+export const ColorModeSelect = () => {
+  const { preferences } = useAppContext()
+
+  return (
+    <Stack
+      direction="row"
+      justifyContent="flex-start"
+      alignItems="center"
+      gap={ 2 }
+    >
+      <ColorModeToggle />
+      <div>
+        <Typography level="title-md">
+          <Typography color="primary" variant="soft">{
+            preferences.colorMode.current[0].toUpperCase() + preferences.colorMode.current.slice(1)
+          }</Typography> Mode
+        </Typography>
+        <Typography level="body-xs">
+          Click to swap to <strong>{ preferences.colorMode.other[0].toUpperCase() + preferences.colorMode.other.slice(1) }</strong> mode
+        </Typography>
+      </div>
+    </Stack>
+  )
+}
+
+const ColorModeToggle = ({ sx, ...props }) => {
   const { preferences } = useAppContext()
 
   const [mounted, setMounted] = useState(false)

@@ -68,7 +68,7 @@ export const Mapper = ({ height, width, ...props }) => {
     type: 'line',
     paint: {
       'line-width': 5,
-      'line-color': '#33aaff',
+      'line-color': preferences.mapStyle.boundaryColor.current,
     }
   }), [engagedFeature.current])
 
