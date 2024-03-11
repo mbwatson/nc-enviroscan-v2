@@ -6,7 +6,6 @@ export const countiesFillLayer = {
   source: 'counties',
   type: 'fill',
   paint: {
-    'fill-outline-color': '#0040c8',
     'fill-color': '#fff',
     'fill-opacity': 0,
   },
@@ -29,7 +28,7 @@ export const name = 'Counties'
 export const Component = () => {
   return (
     <Source
-      id="counties"
+      id={ id }
       type="geojson"
       data={ counties }
     >
@@ -37,4 +36,8 @@ export const Component = () => {
       <Layer { ...countiesFillLayer } />
     </Source>
   )
+}
+
+export const accessor = {
+  name: 'properties.CountyName',
 }

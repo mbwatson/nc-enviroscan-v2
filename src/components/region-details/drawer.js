@@ -11,27 +11,18 @@ import {
 import { useMap } from '@context'
 import { RegionFeatures } from './region-features'
 import { RegionMetadata } from './region-metadata'
-
-const regionTitle = region => {
-  if (!region) {
-    return '...'
-  }
-  if (region.layer.source === 'counties') {
-    return `${ region.properties.CountyName } County`
-  }
-  if (region.layer.source === 'census-tracts') {
-    return region.properties.NAMELSAD
-  }
-  return 'Unrecognized Region'
-}
+import { deepValue } from '@util'
 
 export const ActiveRegionDrawer = () => {
-  const { activeRegion } = useMap()
+  const { activeRegion, boundary } = useMap()
+  const { accessor } = boundary.available[boundary.current]
 
-  const drawerTitle = useMemo(
-    () => regionTitle(activeRegion.current),
-    [activeRegion.current]
-  )
+  const drawerTitle = useMemo(() => {
+    if (!activeRegion.current) {
+      return '...'
+    }
+    return `${ boundary.available[activeRegion.current.layer.source].name } / ${ deepValue(activeRegion.current, accessor.name) ?? 'Unrecognized Region' }`
+  }, [activeRegion.current])
 
   return (
     <Drawer

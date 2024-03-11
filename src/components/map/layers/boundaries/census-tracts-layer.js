@@ -28,7 +28,7 @@ export const name = 'Census Tracts'
 export const Component = () => {
   return (
     <Source
-      id="census-tracts"
+      id={ id }
       type="geojson"
       data={ censusTracts }
     >
@@ -36,4 +36,8 @@ export const Component = () => {
       <Layer { ...censusTractsFillLayer } />
     </Source>
   )
+}
+
+export const accessor = {
+  name: 'properties.NAMELSAD',
 }

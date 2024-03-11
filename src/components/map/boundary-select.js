@@ -51,6 +51,22 @@ export const BoundarySelect = () => {
           </ListItemDecorator>
         </MenuItem>
 
+        <MenuItem onClick={ handleSelect('congressional-districts') }>
+          <ListItemDecorator>
+            <BoundaryIcon color={ boundary.current === 'congressional-districts' ? 'primary' : 'default' } />
+          </ListItemDecorator>
+          <ListItemContent>
+            Congressional Districts
+          </ListItemContent>
+          <ListItemDecorator>
+            {
+              boundary.current === 'congressional-districts'
+              ? <SelectedIcon size="sm" color="primary" />
+              : null
+            }
+          </ListItemDecorator>
+        </MenuItem>
+
         <MenuItem onClick={ handleSelect('counties') }>
           <ListItemDecorator>
             <BoundaryIcon color={ boundary.current === 'counties' ? 'primary' : 'default' } />
@@ -61,6 +77,22 @@ export const BoundarySelect = () => {
           <ListItemDecorator>
             {
               boundary.current === 'counties'
+              ? <SelectedIcon size="sm" color="primary" />
+              : null
+            }
+          </ListItemDecorator>
+        </MenuItem>
+
+        <MenuItem onClick={ handleSelect('zipcodes') }>
+          <ListItemDecorator>
+            <BoundaryIcon color={ boundary.current === 'zipcodes' ? 'primary' : 'default' } />
+          </ListItemDecorator>
+          <ListItemContent>
+            ZIP Codes
+          </ListItemContent>
+          <ListItemDecorator>
+            {
+              boundary.current === 'zipcodes'
               ? <SelectedIcon size="sm" color="primary" />
               : null
             }

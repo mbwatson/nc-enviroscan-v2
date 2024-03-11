@@ -11,11 +11,13 @@ import { useLocalStorage } from '@hooks'
 import ncCityData from '@data/nc-cities.json'
 import {
   CensusTractsLayer,
+  CongressionalDistrictsLayer,
   CountiesLayer,
   HospitalsLayer,
   PublicSchoolsLayer,
   NonPublicSchoolsLayer,
   SuperfundSitesLayer,
+  ZipCodesLayer,
 } from '@components/map'
 
 const MapContext = createContext({ })
@@ -56,7 +58,9 @@ export const MapProvider = ({ children }) => {
   //
   const boundaryLayers = {
     [CensusTractsLayer.id]: { ...CensusTractsLayer },
+    [CongressionalDistrictsLayer.id]: { ...CongressionalDistrictsLayer },
     [CountiesLayer.id]: { ...CountiesLayer },
+    [ZipCodesLayer.id]: { ...ZipCodesLayer },
   }
   const [activeBoundaryLayerId, setActiveBoundaryLayerId] = useLocalStorage('boundary', 'counties')
 

@@ -6,11 +6,15 @@ import { useAppContext, useMap } from '@context'
 import * as turf from '@turf/turf'
 
 import { censusTractsFillLayer } from './layers/boundaries/census-tracts-layer'
+import { congressionalDistrictsFillLayer } from './layers/boundaries/congressional-districts-layer'
 import { countiesFillLayer } from './layers/boundaries/counties-layer'
+import { zipcodesFillLayer } from './layers/boundaries/zipcodes-layer'
 
 const interactiveLayerIds = [
   censusTractsFillLayer.id,
+  congressionalDistrictsFillLayer.id,
   countiesFillLayer.id,
+  zipcodesFillLayer.id,
 ]
 
 export const Mapper = ({ height, width, ...props }) => {
