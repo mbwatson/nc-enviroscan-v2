@@ -17,13 +17,13 @@ const root = createRoot(container)
 const ProvisionedApp = () => (
   <CssVarsProvider theme={ theme } defaultMode="light">
     <HashRouter>
-      <DataProvider>
-        <AppContextProvider>
+      <AppContextProvider>
+        <DataProvider>
           <MapProvider>
             <App />
           </MapProvider>
-        </AppContextProvider>
-      </DataProvider>
+        </DataProvider>
+      </AppContextProvider>
     </HashRouter>
   </CssVarsProvider>
 )

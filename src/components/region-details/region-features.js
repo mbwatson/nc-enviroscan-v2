@@ -5,17 +5,23 @@ import {
   AccordionDetails,
   AccordionGroup,
   AccordionSummary,
+  IconButton,
   List,
   ListItem,
+  ListItemContent,
 } from '@mui/joy'
+import {
+  GpsNotFixed as FlyToIcon,
+} from '@mui/icons-material'
 import * as turf from '@turf/turf'
 import { useData, useMap } from '@context'
 import { deepValue } from '@util'
 
+
 // these are features from the visible feature layers (points)
 // that lie within the active region (polygon)
 export const ContainedFeaturesList = ({ features, source }) => {
-  const { layers } = useMap()
+  const { flyTo, layers } = useMap()
   const { accessor } = layers.available[source]
 
   // list the features sorted display names
@@ -24,14 +30,23 @@ export const ContainedFeaturesList = ({ features, source }) => {
   // the accordion in which this gets rendered.
   return (
     <List
-      marker="disc"
       sx={{
-        pt: 1, pb: 0,
+        p: 1, pr: 3,
         maxHeight: '250px',
         overflowY: 'scroll',
         overflowX: 'hidden',
         '.MuiListItem-root': {
           py: 0,
+          '.MuiIconButton-root': {
+            filter: 'opacity(0.2)',
+            transition: 'filter 250ms',
+          },
+          '&:hover .MuiIconButton-root': {
+            filter: 'opacity(1.0)',
+          },
+          '.MuiListItemContent-root': {
+            pl: 1,
+          },
         },
       }}
     >
@@ -43,11 +58,26 @@ export const ContainedFeaturesList = ({ features, source }) => {
         features
           .map(feature => [deepValue(feature, accessor.name), feature])
           .sort(([fName], [gName]) => fName < gName ? -1 : 1)
-          .map(([, feature], i) => (
-            <ListItem key={ `${ i }-${ feature.id }` }>
-              { deepValue(feature, accessor.name) }
-            </ListItem>
-          ))
+          .map(([, feature], i) => {
+            const [longitude, latitude] = feature.geometry.coordinates
+            return (
+              <ListItem
+                key={ `${ i }-${ feature.id }` }
+                endAction={
+                  <IconButton
+                    size="sm"
+                    color="primary"
+                    onClick={ () => flyTo({ longitude, latitude }) }
+                    aria-label="Fly to location"
+                  ><FlyToIcon /></IconButton>
+                }
+              >
+                <ListItemContent>
+                  { deepValue(feature, accessor.name) }
+                </ListItemContent>
+              </ListItem>
+            )
+          })
       }
     </List>
   )
