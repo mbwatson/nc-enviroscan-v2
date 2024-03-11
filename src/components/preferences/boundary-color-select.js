@@ -68,7 +68,7 @@ export const BoundaryColorSelect = () => {
               </Stack>
             ) : (
               <Fragment>
-                <Typography level="title-md">Highlight Color</Typography>
+                <Typography level="title-md">Boundary Color</Typography>
                 <Typography level="body-xs" sx={{
                   color: preferences.mapStyle.boundaryColor.current,
                 }}>{ preferences.mapStyle.boundaryColor.current }</Typography>

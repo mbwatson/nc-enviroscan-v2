@@ -81,7 +81,6 @@ export const Mapper = ({ height, width, ...props }) => {
       activeRegion.set(null)
       return
     }
-    console.log(feature)
     // we have a feature. what was it?
     // it must be the same as the hovered
     // one, `activeRegion.current`.
@@ -100,8 +99,13 @@ export const Mapper = ({ height, width, ...props }) => {
   const onMouseLeave = useCallback(() => setCursor('auto'), []);
 
   const ActiveBoundaryLayer = useCallback(() => {
-    return <BoundaryLayer sourceId={ boundary.current } />
-  }, [boundary.current])
+    return (
+      <BoundaryLayer
+        color={ preferences.mapStyle.boundaryColor.current }
+        sourceId={ boundary.current }
+      />
+    )
+  }, [boundary.current, preferences.mapStyle.boundaryColor.current])
 
   return (
     <Map

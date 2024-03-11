@@ -12,16 +12,7 @@ export const fillLayer = {
   }
 };
 
-const lineLayer = {
-  id: 'boundary-outline',
-  type: 'line',
-  paint: {
-    'line-width': 1,
-    'line-color': '#0080ef',
-  }
-}
-
-export const BoundaryLayer = ({ sourceId }) => {
+export const BoundaryLayer = ({ color = '#0080ef', sourceId }) => {
   if (!sourceId) {
     return <Source id="blank" type="geojson" data={{}} />
   }
@@ -32,13 +23,21 @@ export const BoundaryLayer = ({ sourceId }) => {
       type="geojson"
       data={ boundaryLayerData[sourceId] }
     >
-      <Layer { ...lineLayer } />
+      <Layer
+        id="boundary-outline"
+        type="line"
+        paint={{
+          'line-width': 1,
+          'line-color': color,
+        }}
+      />
       <Layer { ...fillLayer } />
     </Source>
   )
 }
 
 BoundaryLayer.propTypes = {
+  color: PropTypes.string,
   sourceId: PropTypes.oneOf(Object.keys(boundaryLayerData))
 }
 
