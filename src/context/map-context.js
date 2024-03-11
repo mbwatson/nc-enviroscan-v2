@@ -10,15 +10,12 @@ import PropTypes from 'prop-types'
 import { useLocalStorage } from '@hooks'
 import ncCityData from '@data/nc-cities.json'
 import {
-  CensusTractsLayer,
-  CongressionalDistrictsLayer,
-  CountiesLayer,
   HospitalsLayer,
   PublicSchoolsLayer,
   NonPublicSchoolsLayer,
   SuperfundSitesLayer,
-  ZipCodesLayer,
 } from '@components/map'
+import { boundaryLayers } from '@components/map/layers/boundaries'
 
 const MapContext = createContext({ })
 export const useMap = () => useContext(MapContext)
@@ -55,13 +52,6 @@ export const MapProvider = ({ children }) => {
   }
   const deactivateAllLayers = () => setActiveLayerIds(new Set())
 
-  //
-  const boundaryLayers = {
-    [CensusTractsLayer.id]: { ...CensusTractsLayer },
-    [CongressionalDistrictsLayer.id]: { ...CongressionalDistrictsLayer },
-    [CountiesLayer.id]: { ...CountiesLayer },
-    [ZipCodesLayer.id]: { ...ZipCodesLayer },
-  }
   const [activeBoundaryLayerId, setActiveBoundaryLayerId] = useLocalStorage('boundary', 'counties')
 
   //

@@ -15,14 +15,14 @@ import { deepValue } from '@util'
 
 export const ActiveRegionDrawer = () => {
   const { activeRegion, boundary } = useMap()
-  const { accessor } = boundary.available[boundary.current]
 
   const drawerTitle = useMemo(() => {
-    if (!activeRegion.current) {
+    if (!activeRegion.current || !boundary.available) {
       return '...'
     }
-    return `${ boundary.available[activeRegion.current.layer.source].name } / ${ deepValue(activeRegion.current, accessor.name) ?? 'Unrecognized Region' }`
-  }, [activeRegion.current])
+    const { accessor, nameSingular } = boundary.available[boundary.current]
+    return `${ nameSingular } / ${ deepValue(activeRegion.current, accessor.name) ?? 'Unrecognized Region' }`
+  }, [activeRegion.current, boundary.available])
 
   return (
     <Drawer

@@ -1,21 +1,16 @@
-import { createElement, useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Box } from '@mui/joy'
 import Map, { Layer, Popup, Source } from 'react-map-gl'
 import { useAppContext, useMap } from '@context'
 import * as turf from '@turf/turf'
 
-import { censusTractsFillLayer } from './layers/boundaries/census-tracts-layer'
-import { congressionalDistrictsFillLayer } from './layers/boundaries/congressional-districts-layer'
-import { countiesFillLayer } from './layers/boundaries/counties-layer'
-import { zipcodesFillLayer } from './layers/boundaries/zipcodes-layer'
+import {
+  BoundaryLayer,
+  fillLayer as boundaryFillLayer,
+} from './layers/boundaries/boundary-layer'
 
-const interactiveLayerIds = [
-  censusTractsFillLayer.id,
-  congressionalDistrictsFillLayer.id,
-  countiesFillLayer.id,
-  zipcodesFillLayer.id,
-]
+const interactiveLayerIds = [boundaryFillLayer.id]
 
 export const Mapper = ({ height, width, ...props }) => {
   const { notify, setLoading, preferences } = useAppContext()
@@ -60,7 +55,6 @@ export const Mapper = ({ height, width, ...props }) => {
     fitBounds(bbox)
   }, [activeRegion.current, preferences.shouldZoomToRegion.enabled])
 
-
   // check if a feature in our boundary layer is hovered
   // and, if so, set it as our active feature layer.
   const handleHoverMap = event => {
@@ -87,15 +81,12 @@ export const Mapper = ({ height, width, ...props }) => {
       activeRegion.set(null)
       return
     }
+    console.log(feature)
     // we have a feature. what was it?
     // it must be the same as the hovered
     // one, `activeRegion.current`.
     activeRegion.set(feature)
   }
-
-  const BoundaryLayer = useCallback(() => boundary.current
-    ? createElement(boundary.available[boundary.current].Component)
-    : null, [boundary.current])
 
   const engagedFeatureStyle = useMemo(() => ({
     type: 'line',
@@ -107,6 +98,10 @@ export const Mapper = ({ height, width, ...props }) => {
 
   const onMouseEnter = useCallback(() => setCursor('pointer'), []);
   const onMouseLeave = useCallback(() => setCursor('auto'), []);
+
+  const ActiveBoundaryLayer = useCallback(() => {
+    return <BoundaryLayer sourceId={ boundary.current } />
+  }, [boundary.current])
 
   return (
     <Map
@@ -128,7 +123,7 @@ export const Mapper = ({ height, width, ...props }) => {
       source="mapbox://mvvatson.clkpnbbi50bu62dp5dxh26pee-5d8sq"
       mapboxAccessToken={ process.env.MAPBOX_TOKEN }
     >
-      <BoundaryLayer />
+      <ActiveBoundaryLayer />
       {
         layers.active.map(layerId => {
           const { Component } = layers.available[layerId]
