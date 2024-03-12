@@ -15,7 +15,7 @@ import {
   NonPublicSchoolsLayer,
   SuperfundSitesLayer,
 } from '@components/map'
-import { boundaryLayers } from '@components/map/layers/boundaries'
+import { boundaryLayers } from '@components/map/layers/boundary-layer'
 
 const MapContext = createContext({ })
 export const useMap = () => useContext(MapContext)
@@ -33,24 +33,24 @@ export const MapProvider = ({ children }) => {
     [SuperfundSitesLayer.id]: { ...SuperfundSitesLayer },
   }
   const [activeLayerIds, setActiveLayerIds] = useState(new Set(['public-schools', 'hospitals']))
-  const showLayer = layerId => {
+  const showLayer = useCallback(layerId => {
     const newIds = new Set([...activeLayerIds])
     newIds.add(layerId)
     setActiveLayerIds(newIds)
-  }
-  const hideLayer = layerId => {
+  }, [])
+  const hideLayer = useCallback(layerId => {
     const newIds = new Set([...activeLayerIds])
     newIds.delete(layerId)
     setActiveLayerIds(newIds)
-  }
-  const toggleLayer = layerId => {
+  }, [])
+  const toggleLayer = useCallback(layerId => {
     if (activeLayerIds.has(layerId)) {
       hideLayer(layerId)
       return
     }
     showLayer(layerId)
-  }
-  const deactivateAllLayers = () => setActiveLayerIds(new Set())
+  }, [])
+  const deactivateAllLayers = useCallback(() => setActiveLayerIds(new Set()), [])
 
   const [activeBoundaryLayerId, setActiveBoundaryLayerId] = useLocalStorage('boundary', 'counties')
 
@@ -81,6 +81,10 @@ export const MapProvider = ({ children }) => {
     })
   }, [mapRef.current])
 
+  const addPin = useCallback(() => {
+    console.log('piN!')
+  }, [mapRef.current])
+
   const fitBounds = useCallback(bounds => {
     if (!mapRef.current) {
       return
@@ -106,6 +110,7 @@ export const MapProvider = ({ children }) => {
       },
       locationPresets,
       flyTo,
+      addPin,
       fitBounds,
       popup: {
         info: popupInfo,

@@ -4,11 +4,10 @@ import { Box } from '@mui/joy'
 import Map, { Layer, Popup, Source } from 'react-map-gl'
 import { useAppContext, useMap } from '@context'
 import * as turf from '@turf/turf'
-
 import {
   BoundaryLayer,
   fillLayer as boundaryFillLayer,
-} from './layers/boundaries/boundary-layer'
+} from './layers/boundary-layer'
 
 const interactiveLayerIds = [boundaryFillLayer.id]
 
