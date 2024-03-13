@@ -44,11 +44,12 @@ export const Mapper = ({ height, width, ...props }) => {
       return
     }
     const bbox = turf.bbox(region)
-    const lp = activeRegion.current ? Math.max((windowSize.width - 715) / 2, 0) + 100 : 100
+    // drawer offset
+    // const paddingLeft = activeRegion.current ? Math.max((windowSize.width - 715) / 2, 0) + 100 : 100
     fitBounds(bbox, {
       padding: {
               top: 100,
-        left: lp,   right: 100,
+        left: 100/*paddingLeft*/,   right: 100,
              bottom: 100,
       },
       duration: 1000,
