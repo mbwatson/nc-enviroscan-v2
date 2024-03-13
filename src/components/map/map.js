@@ -12,7 +12,7 @@ import {
 const interactiveLayerIds = [boundaryFillLayer.id]
 
 export const Mapper = ({ height, width, ...props }) => {
-  const { notify, setLoading, preferences } = useAppContext()
+  const { notify, setLoading, preferences, windowSize } = useAppContext()
   const {
     activeRegion, engagedFeature, boundary, fitBounds,
     mapRef, layers, popup, viewState,
@@ -42,17 +42,20 @@ export const Mapper = ({ height, width, ...props }) => {
       return
     }
     const bbox = turf.bbox(region)
-    const width = bbox[2] - bbox[0]
-    const marginX = 0.1 * width
-    const height = bbox[3] - bbox[1]
-    const marginY = 0.15 * height
-    bbox[0] = bbox[0] - marginX
-    bbox[2] = bbox[2] + marginX
-    bbox[1] = bbox[1] - marginY
-    bbox[3] = bbox[3] + marginY
-    bbox[0] = 2*bbox[0] - bbox[2]
-    fitBounds(bbox)
-  }, [activeRegion.current, preferences.shouldZoomToRegion.enabled])
+    const lp = Math.max((windowSize.width - 715) / 2, 0) + 50
+    fitBounds(bbox, {
+      padding: {
+              top: 50,
+        left: lp,   right: 50,
+             bottom: 50,
+      },
+      duration: 1000,
+    })
+  }, [
+    activeRegion.current,
+    preferences.shouldZoomToRegion.enabled,
+    windowSize.width,
+  ])
 
   // check if a feature in our boundary layer is hovered
   // and, if so, set it as our active feature layer.

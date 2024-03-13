@@ -81,15 +81,11 @@ export const MapProvider = ({ children }) => {
     })
   }, [mapRef.current])
 
-  const addPin = useCallback(() => {
-    console.log('piN!')
-  }, [mapRef.current])
-
-  const fitBounds = useCallback(bounds => {
+  const fitBounds = useCallback((bounds, options = {}) => {
     if (!mapRef.current) {
       return
     }
-    mapRef.current.fitBounds(bounds)
+    mapRef.current.fitBounds(bounds, options)
   }, [mapRef.current])
 
   // think: "hovered" or "highlighted" in practice
@@ -110,7 +106,6 @@ export const MapProvider = ({ children }) => {
       },
       locationPresets,
       flyTo,
-      addPin,
       fitBounds,
       popup: {
         info: popupInfo,
