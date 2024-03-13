@@ -55,12 +55,6 @@ export const MapProvider = ({ children }) => {
   const [activeBoundaryLayerId, setActiveBoundaryLayerId] = useLocalStorage('boundary', 'counties')
 
   //
-  const [popupInfo, setPopupInfo] = useState(null)
-  const closePopup = () => {
-    setPopupInfo(null)
-  }
-
-  //
   const locationPresets = Object.keys(ncCityData.cities)
     .map(cityName => ({
       label: `${ cityName }, NC`,
@@ -107,11 +101,6 @@ export const MapProvider = ({ children }) => {
       locationPresets,
       flyTo,
       fitBounds,
-      popup: {
-        info: popupInfo,
-        set: setPopupInfo,
-        close: closePopup,
-      },
       layers: {
         available: { ...layers },
         active: [...activeLayerIds],

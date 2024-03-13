@@ -7,40 +7,7 @@ export const MapView = () => {
   const { windowSize } = useAppContext()
 
   return (
-    <FullscreenPage sx={{
-      '.mapboxgl-popup': { 
-        position: 'absolute',
-        top: '10px',
-        left: 0,
-        willChange: 'transform',
-        zIndex: 999,
-        backgroundColor: 'transparent',
-        minWidth: '300px',
-        minHeight: '300px',
-        overflow: 'hidden',
-        'pre': {
-          maxHeight: '200px',
-          overflow: 'auto'
-        }
-      },
-      '.mapboxgl-popup-tip': {
-        width: '1rem',
-        height: '1rem',
-        margin: 'auto',
-        borderWidth: 0,
-        backgroundColor: 'background.surface',
-        transform: 'rotate(45deg) translate(0.4rem, 0.4rem)',
-      },
-      '.mapboxgl-popup-content': {
-        borderRadius: 5,
-        p: 1,
-        color: 'text.primary',
-        backgroundColor: 'background.surface',
-        'pre': {
-          fontSize: '75%',
-        },
-      },
-    }}>
+    <FullscreenPage>
       {
         !windowSize.height || !windowSize.width
         ? 'Loading...'
