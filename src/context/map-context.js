@@ -32,7 +32,7 @@ export const MapProvider = ({ children }) => {
     [PublicSchoolsLayer.id]: { ...PublicSchoolsLayer },
     [SuperfundSitesLayer.id]: { ...SuperfundSitesLayer },
   }
-  const [activeLayerIds, setActiveLayerIds] = useState(new Set(['public-schools', 'hospitals']))
+  const [activeLayerIds, setActiveLayerIds] = useState(new Set(['hospitals']))
   const showLayer = useCallback(layerId => {
     const newIds = new Set([...activeLayerIds])
     newIds.add(layerId)
