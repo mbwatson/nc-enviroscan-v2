@@ -85,6 +85,8 @@ export const AppContextProvider = ({ children }) => {
 
   const shouldZoomToRegion = useToggleLocalStorage('zoom-to-bounds')
 
+  const showCenterMarker = useToggleLocalStorage('show-center-marker')
+
   const notify = (message, type = 'default') => {
     toast(message, { type })
   }
@@ -104,6 +106,7 @@ export const AppContextProvider = ({ children }) => {
         },
         mapStyle,
         shouldZoomToRegion,
+        showCenterMarker,
         cache,
       },
       windowSize,

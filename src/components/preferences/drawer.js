@@ -12,11 +12,14 @@ import {
 } from '@mui/joy'
 import { Tune as MenuIcon } from '@mui/icons-material'
 import { useAppContext } from '@context'
-import { CacheSelect } from './cache-select'
-import { ColorModeSelect } from './color-mode-select'
-import { BoundaryColorSelect } from './boundary-color-select'
-import { MapStyleSelect } from './map-style-select'
-import { ZoomToRegionSelect } from './zoom-to-region-select'
+import {
+  CacheSelect,
+  ColorModeSelect,
+  BoundaryColorSelect,
+  MapStyleSelect,
+  ZoomToRegionSelect,
+  CenterMarker,
+} from './settings'
 
 export const PreferencesDrawer = () => {
   const { preferences } = useAppContext()
@@ -70,6 +73,7 @@ export const PreferencesDrawer = () => {
             <Typography level="title-md">Behavior</Typography>
 
             <ZoomToRegionSelect />
+            <CenterMarker />
             <CacheSelect />
           </DialogContent>
 

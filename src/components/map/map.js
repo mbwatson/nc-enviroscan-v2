@@ -146,13 +146,17 @@ export const Mapper = ({ height, width, ...props }) => {
           </Source>
         )
       }
-      <Marker
-        longitude={ viewState.current.longitude }
-        latitude={ viewState.current.latitude }
-        anchor="center"
-      >
-        <CenterMarker />
-      </Marker>
+      {
+        preferences.showCenterMarker.enabled && (
+          <Marker
+            longitude={ viewState.current.longitude }
+            latitude={ viewState.current.latitude }
+            anchor="center"
+          >
+            <CenterMarker sx={{ fontSize: '36pt' }}/>
+          </Marker>
+        )
+      }
     </Map>
   )
 }
