@@ -16,7 +16,7 @@ import {
 import * as turf from '@turf/turf'
 import { useData, useMap } from '@context'
 import { deepValue } from '@util'
-
+import { FixedSizeList as VirtualizedList } from 'react-window'
 
 // these are features from the visible feature layers (points)
 // that lie within the active region (polygon)
@@ -35,6 +35,43 @@ export const ContainedFeaturesList = ({ features, source }) => {
 
   const handleClickPlace = useCallback(({ longitude, latitude }) => () => {
     flyTo({ longitude, latitude })
+  }, [])
+
+    // here we list points features lying within our
+    // active region, grouped in alphabetical list of
+    // the active layer in which they lie.
+    // !! room for improvement.
+    const sortedItems = useMemo(() => {
+      return features
+        .map(feature => [deepValue(feature, accessor.name), feature])
+        .sort(([fName], [gName]) => fName < gName ? -1 : 1)
+        .map(([, feature]) => feature)
+    }, [features])
+
+
+  const Row = useCallback(({ index, style }) => {
+    const feature =  sortedItems[index]
+    const [longitude, latitude] = feature.geometry.coordinates
+
+    return (
+      <ListItem
+        onMouseOver={ handleHoverPlace({ longitude, latitude }) }
+        onMouseLeave={ handleHoverPlace(null) }
+        endAction={
+          <IconButton
+            size="sm"
+            color="primary"
+            onClick={ handleClickPlace({ longitude, latitude }) }
+            aria-label="Fly to location"
+          ><FlyToIcon /></IconButton>
+        }
+        sx={ style }
+      >
+        <ListItemContent>
+          { deepValue(feature, accessor.name) }
+        </ListItemContent>
+      </ListItem>
+    )
   }, [])
 
   return (
@@ -62,37 +99,12 @@ export const ContainedFeaturesList = ({ features, source }) => {
         },
       }}
     >
-      {
-        // here we list points features lying within our
-        // active region, grouped in alphabetical list of
-        // the active layer in which they lie.
-        // !! room for improvement.
-        features
-          .map(feature => [deepValue(feature, accessor.name), feature])
-          .sort(([fName], [gName]) => fName < gName ? -1 : 1)
-          .map(([, feature], i) => {
-            const [longitude, latitude] = feature.geometry.coordinates
-            return (
-              <ListItem
-                key={ `${ i }-${ feature.id }` }
-                onMouseOver={ handleHoverPlace({ longitude, latitude }) }
-                onMouseLeave={ handleHoverPlace(null) }
-                endAction={
-                  <IconButton
-                    size="sm"
-                    color="primary"
-                    onClick={ handleClickPlace({ longitude, latitude }) }
-                    aria-label="Fly to location"
-                  ><FlyToIcon /></IconButton>
-                }
-              >
-                <ListItemContent>
-                  { deepValue(feature, accessor.name) }
-                </ListItemContent>
-              </ListItem>
-            )
-          })
-      }
+      <VirtualizedList
+        height={ 250 }
+        itemCount={ features.length }
+        itemSize={ 36 }
+        width="100%"
+      >{ Row }</VirtualizedList>
     </List>
   )
 }

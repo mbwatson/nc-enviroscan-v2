@@ -67,6 +67,7 @@
     "react-markdown": "^9.0.1",
     "react-router-dom": "^6.22.2",
     "react-toastify": "^10.0.4",
+    "react-window": "^1.8.10",
     "regenerator-runtime": "^0.14.1",
     "remark-gfm": "^4.0.0",
     "uuid": "^9.0.1",
