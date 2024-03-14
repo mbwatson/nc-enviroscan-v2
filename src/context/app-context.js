@@ -24,7 +24,7 @@ export const useAppContext = () => useContext(AppContext)
 // as it relates to the current mode (dark/light), which can get messy.
 const useMapStyle = (colorMode) => {
   const [mapStyle, setMapStyle] = useLocalStorage('map-style', 'min')
-  const [boundaryColor, setBoundaryColor] = useLocalStorage('boundary-color')
+  const [boundaryColor, setBoundaryColor] = useLocalStorage('boundary-color', '#f99')
 
   const baseMap = useMemo(() => ({
     'min': colorMode === 'dark' ? 'dark-v11' : 'light-v11',
