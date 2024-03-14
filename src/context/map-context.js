@@ -25,7 +25,7 @@ export const MapProvider = ({ children }) => {
   const mapRef = useRef(null)
   const [viewState, setViewState] = useLocalStorage('view-state', RALEIGH_NC)
 
-  const layers = {
+  const pointLayers = {
     [HospitalsLayer.id]: { ...HospitalsLayer },
     [NonPublicSchoolsLayer.id]: { ...NonPublicSchoolsLayer },
     [PublicSchoolsLayer.id]: { ...PublicSchoolsLayer },
@@ -95,7 +95,7 @@ export const MapProvider = ({ children }) => {
       flyTo,
       fitBounds,
       layers: {
-        available: { ...layers },
+        available: { ...pointLayers },
         active: [...activeLayerIds],
         toggle: toggleLayer,
         show: showLayer,
