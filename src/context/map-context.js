@@ -2,7 +2,6 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useRef,
   useState,
 } from 'react'
@@ -82,12 +81,6 @@ export const MapProvider = ({ children }) => {
     mapRef.current.fitBounds(bounds, options)
   }, [mapRef.current])
 
-  // think: "hovered" or "highlighted" in practice
-  const [engagedFeature, setEngagedFeature] = useState(null)
-  useEffect(() => {
-    setEngagedFeature(null)
-  }, [activeBoundaryLayerId])
-
   // think: "selected"
   const [activeRegion, setActiveRegion] = useState(null)
 
@@ -113,10 +106,6 @@ export const MapProvider = ({ children }) => {
         available: boundaryLayers,
         current: activeBoundaryLayerId,
         set: setActiveBoundaryLayerId,
-      },
-      engagedFeature: {
-        current: engagedFeature,
-        set: setEngagedFeature,
       },
       activeRegion: {
         current: activeRegion,

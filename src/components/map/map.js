@@ -13,12 +13,15 @@ import 'mapbox-gl/dist/mapbox-gl.css'
 export const Mapper = ({ height, width, ...props }) => {
   const { notify, setLoading, preferences, windowSize } = useAppContext()
   const {
-    activeRegion, engagedFeature, boundary, fitBounds,
-    layers, mapRef, viewState,
+    activeRegion, boundary, fitBounds, layers, mapRef, viewState,
   } = useMap()
   const interactiveLayerIds = [
     boundaryFillLayer.id,
   ]
+  
+  // think: *hovered*
+  const [engagedRegion, setEngagedRegion] = useState(null)
+
   const [cursor, setCursor] = useState('auto')
 
   useEffect(() => {
@@ -68,11 +71,11 @@ export const Mapper = ({ height, width, ...props }) => {
     // if no feature layer was clicked,
     // reflect this in state, and bail out now.
     if (!feature) {
-      engagedFeature.set(null)
+      setEngagedRegion(null)
       return
     }
     // we have a feature. stick it in state.
-    engagedFeature.set(feature)
+    setEngagedRegion(feature)
   }
 
   // check if a feature in our boundary layer is clicked
@@ -93,13 +96,13 @@ export const Mapper = ({ height, width, ...props }) => {
     activeRegion.set(feature)
   }
 
-  const engagedFeatureStyle = useMemo(() => ({
+  const engagedRegionStyle = useMemo(() => ({
     type: 'line',
     paint: {
       'line-width': 5,
       'line-color': preferences.mapStyle.boundaryColor.current,
     }
-  }), [engagedFeature.current])
+  }), [engagedRegion])
 
   const onMouseEnter = useCallback(() => setCursor('pointer'), []);
   const onMouseLeave = useCallback(() => setCursor('auto'), []);
@@ -141,9 +144,9 @@ export const Mapper = ({ height, width, ...props }) => {
         })
       }
       {
-        engagedFeature.current && (
-          <Source id="active-feature" type="geojson" data={ engagedFeature.current }>
-            <Layer { ...engagedFeatureStyle } />
+        engagedRegion && (
+          <Source id="active-feature" type="geojson" data={ engagedRegion }>
+            <Layer { ...engagedRegionStyle } />
           </Source>
         )
       }
