@@ -22,7 +22,7 @@ export const CenterMarker = () => {
       <CenterMarkerToggle />
       <div>
         <Typography level="title-md">
-          Center marker <Typography variant="soft" color="primary">{
+          Center Marker <Typography variant="soft" color="primary">{
             preferences.showCenterMarker.enabled ? 'Enabled' : 'Disabled'
           }</Typography>
         </Typography>
