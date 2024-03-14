@@ -18,8 +18,13 @@ import { useData, useMap } from '@context'
 import { deepValue } from '@util'
 import { FixedSizeList as VirtualizedList } from 'react-window'
 
-// these are features from the visible feature layers (points)
-// that lie within the active region (polygon)
+// we leverage our deep-value-accessing utility
+// function to sort our features (Objects) by a
+// property buried deep within the object.
+const sortFeatures = (features, key) => features
+  .sort((f, g) => deepValue(f, key) < deepValue(g, key) ? -1 : 1)
+
+// this is a list of features from the visible feature layers (points)
 export const ContainedFeaturesList = ({ features, source }) => {
   const { beacon, flyTo, layers } = useMap()
   const { accessor } = layers.available[source]
@@ -37,17 +42,10 @@ export const ContainedFeaturesList = ({ features, source }) => {
     flyTo({ longitude, latitude })
   }, [])
 
-    // here we list points features lying within our
-    // active region, grouped in alphabetical list of
-    // the active layer in which they lie.
-    // !! room for improvement.
-    const sortedItems = useMemo(() => {
-      return features
-        .map(feature => [deepValue(feature, accessor.name), feature])
-        .sort(([fName], [gName]) => fName < gName ? -1 : 1)
-        .map(([, feature]) => feature)
-    }, [features])
-
+  const sortedItems = useMemo(
+    () => sortFeatures(features, accessor.name),
+    [features]
+  )
 
   const Row = useCallback(({ index, style }) => {
     const feature =  sortedItems[index]
