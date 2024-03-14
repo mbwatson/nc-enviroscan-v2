@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import {
   Accordion,
@@ -21,13 +21,22 @@ import { deepValue } from '@util'
 // these are features from the visible feature layers (points)
 // that lie within the active region (polygon)
 export const ContainedFeaturesList = ({ features, source }) => {
-  const { flyTo, layers } = useMap()
+  const { beacon, flyTo, layers } = useMap()
   const { accessor } = layers.available[source]
+
+  const handleHoverPlace = useCallback(coords => () => {
+    beacon.set(coords)
+  }, [])
 
   // list the features sorted display names
   // those no need to handle the case of having no
   // features, an empty array, because we disable
   // the accordion in which this gets rendered.
+
+  const handleClickPlace = useCallback(({ longitude, latitude }) => () => {
+    flyTo({ longitude, latitude })
+  }, [])
+
   return (
     <List
       sx={{
@@ -47,13 +56,16 @@ export const ContainedFeaturesList = ({ features, source }) => {
           '.MuiListItemContent-root': {
             pl: 1,
           },
+          '&:hover .MuiListItemContent-root': {
+            color: 'text.primary',
+          },
         },
       }}
     >
       {
         // here we list points features lying within our
         // active region, grouped in alphabetical list of
-        // the active latyer in which they lie.
+        // the active layer in which they lie.
         // !! room for improvement.
         features
           .map(feature => [deepValue(feature, accessor.name), feature])
@@ -63,11 +75,13 @@ export const ContainedFeaturesList = ({ features, source }) => {
             return (
               <ListItem
                 key={ `${ i }-${ feature.id }` }
+                onMouseOver={ handleHoverPlace({ longitude, latitude }) }
+                onMouseLeave={ handleHoverPlace(null) }
                 endAction={
                   <IconButton
                     size="sm"
                     color="primary"
-                    onClick={ () => flyTo({ longitude, latitude }) }
+                    onClick={ handleClickPlace({ longitude, latitude }) }
                     aria-label="Fly to location"
                   ><FlyToIcon /></IconButton>
                 }

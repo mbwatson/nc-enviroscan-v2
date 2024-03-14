@@ -8,12 +8,13 @@ import {
   BoundaryLayer,
   fillLayer as boundaryFillLayer,
 } from './layers/boundary-layer'
+import { BeaconLayer } from './layers'
 import 'mapbox-gl/dist/mapbox-gl.css'
 
 export const Mapper = ({ height, width, ...props }) => {
   const { notify, setLoading, preferences, windowSize } = useAppContext()
   const {
-    activeRegion, boundary, fitBounds, layers, mapRef, viewState,
+    activeRegion, beacon, boundary, fitBounds, layers, mapRef, viewState,
   } = useMap()
   const interactiveLayerIds = [
     boundaryFillLayer.id,
@@ -81,7 +82,6 @@ export const Mapper = ({ height, width, ...props }) => {
   // check if a feature in our boundary layer is clicked
   // and, if so, set it as our active feature layer.
   const handleClickMap = event => {
-    console.log(event)
     // are we hovering a feature?
     const feature = event?.features?.[0]
     // if no feature layer was clicked,
@@ -160,6 +160,10 @@ export const Mapper = ({ height, width, ...props }) => {
             <CenterMarker sx={{ fontSize: '36pt' }}/>
           </Marker>
         )
+      }
+      {
+        beacon?.current?.longitude && beacon?.current?.latitude &&
+          <BeaconLayer { ...beacon.current } />
       }
     </Map>
   )

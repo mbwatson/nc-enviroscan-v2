@@ -84,6 +84,8 @@ export const MapProvider = ({ children }) => {
   // think: "selected"
   const [activeRegion, setActiveRegion] = useState(null)
 
+  const [beaconLocation, setBeaconLocation] = useState(null)
+
   return (
     <MapContext.Provider value={{
       mapRef,
@@ -111,6 +113,10 @@ export const MapProvider = ({ children }) => {
         current: activeRegion,
         set: setActiveRegion,
       },
+      beacon: {
+        current: beaconLocation,
+        set: setBeaconLocation,
+      }
     }}>
       { children }
     </MapContext.Provider>
