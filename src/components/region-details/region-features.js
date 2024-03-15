@@ -33,6 +33,10 @@ export const ContainedFeaturesList = ({ features, source }) => {
     beacon.set(coords)
   }, [])
 
+  const handleUnhoverPlace = useCallback(() => {
+    beacon.set(null)
+  }, [])
+
   // list the features sorted display names
   // those no need to handle the case of having no
   // features, an empty array, because we disable
@@ -53,8 +57,15 @@ export const ContainedFeaturesList = ({ features, source }) => {
 
     return (
       <ListItem
+        /*
+          having these two event listeneres here, in every item, ...
+        */
         onMouseOver={ handleHoverPlace({ longitude, latitude }) }
-        onMouseLeave={ handleHoverPlace(null) }
+        onMouseLeave={ handleUnhoverPlace }
+        /*
+          ...makes the entire app slow when upwards of about a
+          hundred items are in the list.
+        */
         endAction={
           <IconButton
             size="sm"
