@@ -36,19 +36,19 @@ export const MapProvider = ({ children }) => {
     const newIds = new Set([...activeLayerIds])
     newIds.add(layerId)
     setActiveLayerIds(newIds)
-  }, [])
+  }, [activeLayerIds])
   const hideLayer = useCallback(layerId => {
     const newIds = new Set([...activeLayerIds])
     newIds.delete(layerId)
     setActiveLayerIds(newIds)
-  }, [])
+  }, [activeLayerIds])
   const toggleLayer = useCallback(layerId => {
     if (activeLayerIds.has(layerId)) {
       hideLayer(layerId)
       return
     }
     showLayer(layerId)
-  }, [])
+  }, [activeLayerIds])
   const deactivateAllLayers = useCallback(() => setActiveLayerIds(new Set()), [])
 
   const [activeBoundaryLayerId, setActiveBoundaryLayerId] = useLocalStorage('boundary', 'counties')
