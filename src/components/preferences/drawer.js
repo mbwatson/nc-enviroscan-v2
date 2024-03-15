@@ -15,6 +15,7 @@ import { useAppContext } from '@context'
 import {
   CacheSelect,
   ColorModeSelect,
+  BeaconColorSelect,
   BoundaryColorSelect,
   MapStyleSelect,
   ZoomToRegionSelect,
@@ -65,6 +66,7 @@ export const PreferencesDrawer = () => {
             <ColorModeSelect />
             <MapStyleSelect />
             <BoundaryColorSelect />
+            <BeaconColorSelect />
           </DialogContent>
 
           <Divider />

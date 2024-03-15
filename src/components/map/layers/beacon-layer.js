@@ -1,67 +1,48 @@
-import { memo, useCallback } from 'react'
+import { memo } from 'react'
 import PropTypes from 'prop-types'
 import { Marker } from 'react-map-gl'
 
-export const Beacon = memo(function beaconSvg() {
+export const Beacon = memo(function Beacon({ color = '#ff0000' }) {
   return (
-    <svg
-      height={ 48 }
-      width={ 48 }
-      viewBox="0 0 48 48"
-      style={{
-        fill: '#ff000022',
-        stroke: 'none',
-        zIndex: 9999,
-      }}
-    >
+    <svg height={ 48 } width={ 48 } viewBox="0 0 48 48">
       <circle
         cx="24" cy="27" r="2"
-        fill="#ff0000"
-        stroke="#ff0000"
-        strokeWidth="1"
+        fill={ color } stroke={ color } strokeWidth="1"
       >
         <animate
-          attributeName="r" 
-          begin="0s"
-          values="2;22"
-          keyTimes="0;1"
-          dur="1s"
-          repeatCount="indefinite"
+          attributeName="r" begin="0s" dur="1s"
+          keyTimes="0;1" values="2;22" repeatCount="indefinite"
         />
         <animate
-          attributeName="opacity"
-          begin="0s"
-          dur="1s"
-          repeatCount="indefinite"
-          from="100%"
-          to="0%"
+          attributeName="opacity" begin="0s" dur="1s"
+          from="100%" to="0%" repeatCount="indefinite"
         />
         <animate
-          attributeName="fill-opacity"
-          begin="0s"
-          dur="1s"
-          repeatCount="indefinite"
-          from="100%"
-          to="0%"
+          attributeName="fill-opacity" begin="0s" dur="1s"
+          from="100%" to="0%" repeatCount="indefinite"
         />
       </circle>
     </svg>
   )
 })
 
-export const BeaconLayer = ({ longitude, latitude }) => {
+Beacon.propTypes = {
+  color: PropTypes.string,
+}
 
+export const BeaconLayer = ({ longitude, latitude, color }) => {
   return (
     <Marker
       longitude={ longitude }
       latitude={ latitude }
       anchor="center"
-    ><Beacon /></Marker>
+    ><Beacon color={ color } /></Marker>
   )
 }
 
 BeaconLayer.propTypes = {
   longitude: PropTypes.number.isRequired,
   latitude: PropTypes.number.isRequired,
+  color: PropTypes.string,
 }
 

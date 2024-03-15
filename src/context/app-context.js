@@ -25,6 +25,7 @@ export const useAppContext = () => useContext(AppContext)
 const useMapStyle = (colorMode) => {
   const [mapStyle, setMapStyle] = useLocalStorage('map-style', 'min')
   const [boundaryColor, setBoundaryColor] = useLocalStorage('boundary-color', '#f99')
+  const [beaconColor, setBeaconColor] = useLocalStorage('beacon-color', '#f99')
 
   const baseMap = useMemo(() => ({
     'min': colorMode === 'dark' ? 'dark-v11' : 'light-v11',
@@ -52,6 +53,10 @@ const useMapStyle = (colorMode) => {
     boundaryColor: {
       current: boundaryColor,
       set: setBoundaryColor,
+    },
+    beaconColor: {
+      current: beaconColor,
+      set: setBeaconColor,
     },
   }
 }

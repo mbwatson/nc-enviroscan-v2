@@ -1,3 +1,4 @@
+export * from './beacon-color'
 export * from './boundary-color'
 export * from './cache'
 export * from './center-marker'

@@ -163,7 +163,11 @@ export const Mapper = ({ height, width, ...props }) => {
       }
       {
         beacon?.current?.longitude && beacon?.current?.latitude &&
-          <BeaconLayer { ...beacon.current } />
+          <BeaconLayer
+            color={ preferences.mapStyle.beaconColor.current }
+            latitude={ beacon.current.latitude }
+            longitude={ beacon.current.longitude }
+          />
       }
     </Map>
   )
