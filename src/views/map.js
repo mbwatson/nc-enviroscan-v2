@@ -7,7 +7,9 @@ export const MapView = () => {
   const { windowSize } = useAppContext()
 
   return (
-    <FullscreenPage>
+    <FullscreenPage sx={{
+      '.mapboxgl-control-container': { display: 'none' }
+    }}>
       {
         !windowSize.height || !windowSize.width
         ? 'Loading...'
